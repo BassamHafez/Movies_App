@@ -1,5 +1,4 @@
 "use client";
-import useInitTheme from "@/hooks/useInitTheme";
 import usePagination from "@/hooks/usePagination";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
@@ -18,5 +17,4 @@ export {
   usePathname,
   //custom hooks
   usePagination,
-  useInitTheme,
 };

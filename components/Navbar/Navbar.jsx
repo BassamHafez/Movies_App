@@ -4,12 +4,13 @@ import { avatar } from "@/shared/images";
 import { Image, Link } from "@/shared/lib";
 import NavLinks from "./NavLinks";
 import { smallLogo } from "@/shared/images";
+import { Bell } from "lucide-react";
 
 const Navbar = () => {
   return (
     <nav
       style={{ backdropFilter: "blur(2px)" }}
-      className="navbar bg-base-100/70 shadow-md dark:shadow-white/5 fixed z-50 px-3"
+      className="navbar bg-base-100/70 shadow-md shadow-white/5 fixed z-50 px-3"
     >
       <div className="navbar-start">
         <div className="dropdown">
@@ -35,7 +36,7 @@ const Navbar = () => {
 
       <div className="navbar-end gap-6">
         <SearchField />
-        <SwapThemeBtn />
+        <Bell/>
         <button className="btn bg-main btn-sm border-none text-white rounded-lg min-w-24 hover:bg-white hover:text-main transition-all duration-500">
           Sign In
         </button>
