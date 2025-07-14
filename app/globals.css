@@ -5,12 +5,29 @@
 }
 
 @theme {
-  --color-main: #0582ff;
+  --color-main: #d9a520;
 }
+html {
+  scroll-behavior: smooth;
+  scrollbar-gutter: auto !important;
+}
+
 body {
   overflow-x: hidden;
   font-family: inherit !important;
 }
+
+html,
+body {
+  -ms-overflow-style: none; /* Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
 * {
   box-sizing: border-box;
 }
@@ -22,6 +39,7 @@ a {
 input,
 textarea,
 button,
-label {
+label,
+select {
   outline: none;
 }

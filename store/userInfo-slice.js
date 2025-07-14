@@ -3,15 +3,20 @@ import { createSlice } from "@reduxjs/toolkit";
 const userInfoSlice = createSlice({
   name: "userInfo",
   initialState: {
-    role: "user",
-    token: "jwejfpiowjfipnweondoiqnwoi221393120",
+    info: null,
+    token: "",
   },
   reducers: {
-    setRole(state, action) {
-      state.role = action.payload;
+    setUserInfo(state, action) {
+      state.info = action.payload;
     },
     setToken(state, action) {
       state.token = action.payload;
+    },
+
+    clearAuth(state) {
+      state.token = "";
+      state.info = null;
     },
   },
 });

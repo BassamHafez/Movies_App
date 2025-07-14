@@ -16,6 +16,7 @@ import {
 const persistConfig = {
   key: "Zixes",
   storage,
+  whitelist: ["userInfo"],
 };
 
 const rootReducer = combineReducers({
