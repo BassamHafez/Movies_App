@@ -35,7 +35,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="footer sm:footer-horizontal bg-base-200 text-base-content p-10">
+    <footer className="snap-start footer sm:footer-horizontal bg-base-200 text-base-content p-10">
       <aside>
         <Image className="w-35" src={smallLogo} alt="logo" />
         <p>
@@ -46,9 +46,9 @@ const Footer = () => {
       </aside>
       {footerContent.map((col) => (
         <nav key={col._id}>
-          <h6 className="text-main">{col.title}</h6>
+          <h6 className="font-bold text-gray-400 text-lg">{col.title}</h6>
           {col.links.map((link) => (
-            <Link key={link.name} href={link.url}>
+            <Link key={link.name} href={link.url} className="hover:scale-102 duration-300">
               {link.name}
             </Link>
           ))}

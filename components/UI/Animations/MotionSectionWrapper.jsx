@@ -1,13 +1,23 @@
 "use client";
 import { motion } from "@/shared/lib";
 
-const MotionSectionWrapper = ({ children, classes }) => {
+const MotionSectionWrapper = ({
+  children,
+  classes,
+  horizontalShift = false,
+  fadeOnly = false,
+}) => {
   return (
     <motion.section
       className={classes}
-      initial={{ opacity: 0, y: 100, scale: 0.8 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.7, ease: "easeInOut" }}
+      initial={{
+        opacity: 0,
+        y: fadeOnly ? 0 : 100,
+        x: horizontalShift ? -200 : 0,
+      }}
+      whileInView={{ opacity: 1, y: 0, x: 0 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true, amount: 0.3 }}
     >
       {children}
     </motion.section>

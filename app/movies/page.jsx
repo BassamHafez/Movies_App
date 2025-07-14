@@ -1,11 +1,13 @@
-import React from 'react'
+import MoviesHero from "@/components/Hero/MoviesHero";
+import Movies from "./Movies";
 
 const page = () => {
   return (
-    <div>
-      movies
-    </div>
-  )
-}
+    <main>
+      <MoviesHero />
+      <Movies />
+    </main>
+  );
+};
 
-export default page
+export default page;

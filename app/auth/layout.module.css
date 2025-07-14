@@ -1,0 +1,18 @@
+.layout {
+  background-image: url(../../assets/images/layer.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+  background-position:center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.layer {
+  background-color:rgba(0, 0, 0, .4);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}

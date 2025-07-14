@@ -1,16 +1,28 @@
+"use client";
 import { packagesData } from "@/logic/static";
 import { Check } from "@/shared/icons";
+import { motion } from "@/shared/lib";
 
 const Packages = () => {
   return (
-    <div className="grid grid-cols-3 gap-x-5 justify-around">
+    <div className="grid grid-cols-3 gap-6 justify-center my-8">
       {packagesData.map((pack, index) => (
-        <div
+        <motion.div
+          initial={{ opacity: 0, scale: 0 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ delay: index * 0.1 }}
+          viewport={{ once: true, amount: 0.3 }}
           key={pack._id}
-          className="card w-96 bg-base-200 rounded-lg min-h-80 shadow-lg"
+          className={`card w-96 rounded-xl min-h-80 bg-base-100 shadow-[0px_2px_10px_rgba(255,255,255,0.5)] ${
+            index === 1 ? "shadow-main/60" : " scale-80 hover:scale-100"
+          } hover:shadow-main/50 transition-all duration-600`}
         >
           <div className="card-body">
-            <span className="badge badge-xs badge-error rounded-2xl text-white/80">
+            <span
+              className={`badge badge-xs rounded py-2 text-white/80 ${
+                index === 1 ? "" : "bg-main/50"
+              }`}
+            >
               {pack.type}
             </span>
             <div className="flex justify-between mt-4">
@@ -29,18 +41,12 @@ const Packages = () => {
               ))}
             </ul>
             <div className="mt-auto">
-              <button
-                className={`btn rounded-2xl duration-300 btn-block ${
-                  index === 1
-                    ? "bg-white text-main hover:bg-main hover:text-white"
-                    : "bg-main text-white hover:bg-white hover:text-main"
-                }`}
-              >
+              <button className="btn rounded-md duration-300 btn-block shadow shadow-white/20 hover:bg-white hover:text-main">
                 Subscribe
               </button>
             </div>
           </div>
-        </div>
+        </motion.div>
       ))}
     </div>
   );

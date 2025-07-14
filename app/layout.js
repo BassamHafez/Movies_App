@@ -1,14 +1,7 @@
-import { Navbar } from "@/shared/components";
-import { ReduxProvider } from "@/shared/providers";
+import { Navbar, Toaster } from "@/shared/components";
+import { QueryWrapper, ReduxProvider } from "@/shared/providers";
+import { interFont } from "@/logic/static";
 import "./globals.css";
-import { Roboto } from 'next/font/google'
-
-
-const roboto = Roboto({
-  subsets: ['latin'],
-  weight: ['400','500','600', '700'], 
-  display: 'swap',
-})
 
 export const metadata = {
   title: "Zixes Movies",
@@ -17,11 +10,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={roboto.className}>
+    <html lang="en" className={interFont}>
       <body>
+        <Toaster />
         <ReduxProvider>
-          <Navbar />
-          {children}
+          <QueryWrapper>
+            <Navbar />
+            {children}
+          </QueryWrapper>
         </ReduxProvider>
       </body>
     </html>

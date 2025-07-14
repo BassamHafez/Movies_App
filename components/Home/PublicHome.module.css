@@ -1,0 +1,7 @@
+.fixed_bg {
+  height: 18.75rem;
+  background-image: url(../../assets/images/childInCinema.jpg);
+  background-attachment: fixed;
+  background-size: cover;
+  color: rgb(216, 150, 88);
+}
