@@ -1,6 +1,6 @@
 const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
   return (
-    <div className="flex justify-center mt-6 col-span-4">
+    <div className="flex justify-center">
       <div className="join">
         <button
           className="join-item btn"

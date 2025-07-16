@@ -32,14 +32,16 @@ export const mainFormsHandlerTypeRaw = async ({
   };
 
   const url = `${process.env.NEXT_PUBLIC_MOVIE_URL}${type}`;
-  console.log(url);
+  
   try {
     let response = null;
     if (validFormMethods.includes(method)) {
+      console.log("hiii")
       response = await axios[method](url, formData, {
         headers,
       });
     } else {
+        console.log("bye")
       response = await axios.get(url, {
         headers,
         params,

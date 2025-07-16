@@ -11,38 +11,35 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import "./sliderStyles.css";
 import { FreeMode, Thumbs } from "swiper/modules";
+const currentPage = 1;
 
 const MoviesHeroSlider = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
-
   const { data } = useQuery({
-    queryKey: ["topRatedMovies"],
+    queryKey: ["discoverMovies", currentPage, "now_playing"],
     queryFn: () =>
       mainFormsHandlerTypeRaw({
-        type: "/discover/movie",
+        type: `/movie/now_playing`,
         params: {
-          sort_by: "popularity.desc",
-          page: 1,
-          include_adult: false,
-          include_video: false,
+          page: currentPage,
         },
       }),
     staleTime: 1000 * 60 * 60,
   });
 
   const movies = data?.results;
-  console.log(movies);
+
   return (
     <div className="movies_swiper relative border-2 border-main/30 rounded-xl bg-base-200">
       <Swiper
-        loop={true}
+        loop={false}
         spaceBetween={10}
         thumbs={{ swiper: thumbsSwiper }}
         modules={[FreeMode, Thumbs]}
         className="mySwiper2 rounded-xl"
       >
         {movies ? (
-          movies.map((movie) => (
+          movies.map((movie, index) => (
             <SwiperSlide key={movie.id} className="relative">
               <Image
                 src={`${process.env.NEXT_PUBLIC_IMAGE_PATH}/w1280${movie.backdrop_path}`}
@@ -50,9 +47,10 @@ const MoviesHeroSlider = () => {
                 fill
                 sizes="100%"
                 className="rounded-xl"
+                priority={index === 0}
               />
               <div className="flex items-center px-4 absolute inset-0  bg-gradient-to-r from-black via-black/70 to-transparent rounded-xl">
-                <div className="max-w-1/2">
+                <div className="max-w-1/2 mb-6">
                   <h1 className="font-extrabold text-3xl">{movie.title}</h1>
                   <div className="flex gap-4 mb-4 mt-1">
                     <RatingStars rateNum={movie.vote_average} />
@@ -80,7 +78,7 @@ const MoviesHeroSlider = () => {
       </Swiper>
       <Swiper
         onSwiper={setThumbsSwiper}
-        loop={true}
+        loop={false}
         spaceBetween={5}
         slidesPerView={7}
         freeMode={true}
@@ -89,8 +87,8 @@ const MoviesHeroSlider = () => {
         className="mySwiper mini_slider rounded-b-xl"
       >
         {movies ? (
-          movies.map((movie) => (
-            <SwiperSlide key={movie.id}>
+          movies.map((movie, index) => (
+            <SwiperSlide key={`${movie.id}_${index}`}>
               <Image
                 src={`${process.env.NEXT_PUBLIC_IMAGE_PATH}/w500${movie.poster_path}`}
                 alt={movie.title}

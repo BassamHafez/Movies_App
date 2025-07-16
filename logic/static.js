@@ -1,24 +1,23 @@
-import { Playfair_Display, Inter } from "next/font/google";
 import {
-  ChartPie,
-  Users,
   House,
-  Headset,
-  Monitor,
-  Palette,
-  Podcast,
-} from "lucide-react";
+  Heart,
+  Play,
+  Hourglass,
+  ScanHeart,
+  TvMinimalPlay,
+} from "@/shared/icons";
+import { Playfair_Display, Inter } from "next/font/google";
 
 //fonts
 const playfair = Playfair_Display({
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800", "900"],
+  weight: ["400", "700", "800"],
   display: "swap",
 });
 
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
+  weight: ["400", "700", "800"],
   display: "swap",
 });
 
@@ -64,44 +63,34 @@ const packagesData = [
 
 const sideBarPages = [
   {
-    title: "overview",
-    url: "/dashboard/overview",
+    title: "Discover",
+    param: "discover",
     icon: House,
   },
   {
-    title: "administrators",
-    url: "/dashboard/administrators",
-    icon: Monitor,
+    title: "Now Playing",
+    param: "now_playing",
+    icon: Play,
   },
   {
-    title: "users",
-    url: "/dashboard/users",
-    icon: Users,
+    title: "Popular",
+    param: "popular",
+    icon: Heart,
   },
   {
-    title: "reports",
-    url: "/dashboard/reports",
-    icon: ChartPie,
+    title: "Top Rated",
+    param: "top_rated",
+    icon: ScanHeart,
   },
   {
-    title: "themeSettings",
-    url: "/dashboard/theme-setting",
-    icon: Palette,
+    title: "Up Coming",
+    param: "upcoming",
+    icon: Hourglass,
   },
   {
-    title: "marketing",
-    url: "/dashboard/marketing",
-    icon: Podcast,
-  },
-  {
-    title: "customers",
-    url: "/dashboard/customers",
-    icon: Users,
-  },
-  {
-    title: "support",
-    url: "/dashboard/support",
-    icon: Headset,
+    title: "WatchList",
+    param: "",
+    icon: TvMinimalPlay,
   },
 ];
 

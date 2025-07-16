@@ -16,6 +16,7 @@ import MainTitle from "@/components/UI/Blocks/MainTitle";
 import Pagination from "@/components/UI/Blocks/Pagination";
 import ProfileAvatar from "@/components/UI/Blocks/ProfileAvatar";
 import RatingStars from "@/components/UI/Blocks/RatingStars";
+import SkeletonCard from "@/components/UI/Blocks/SkeletonCard";
 import Toaster from "@/components/UI/Blocks/Toaster";
 import MainBtn from "@/components/UI/CustomBtns/MainBtn";
 import SecondaryBtn from "@/components/UI/CustomBtns/SecondaryBtn";
@@ -48,4 +49,5 @@ export {
   MainSideBar,
   MoviesHeroSlider,
   RatingStars,
+  SkeletonCard,
 };

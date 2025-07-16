@@ -76,4 +76,5 @@
   height: 150px;
   border-radius: 10px;
   object-fit: cover;
+  cursor: pointer;
 }

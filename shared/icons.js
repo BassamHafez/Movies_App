@@ -10,5 +10,12 @@ export {
   Bell,
   AlignRight,
   LogOut,
-  Play 
+  Play,
+  TrendingUp,
+  Hourglass,
+  ScanHeart,
+  House,
+  Bolt,
+  TvMinimalPlay,
+  Star,
 } from "lucide-react";

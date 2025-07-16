@@ -1,4 +1,4 @@
-import { MainSideBar } from "@/shared/components";
+import { Footer, MainSideBar } from "@/shared/components";
 
 export const metadata = {
   title: "Zixes Movies| Movies",
@@ -7,12 +7,19 @@ export const metadata = {
 
 const RootLayout = ({ children }) => {
   return (
-    <main className="grid grid-cols-12 gap-2 py-8 px-4">
-      <aside className="col-span-2">
-        <MainSideBar />
-      </aside>
-      <section className="col-span-10">{children}</section>
-    </main>
+    <>
+      <main className="h-[90vh] overflow-y-hidden mb-16">
+        <div className="flex gap-2 py-8 px-4">
+          <aside className="max-w-[300px]">
+            <MainSideBar />
+          </aside>
+          <section className="col-span-10 h-[90vh] overflow-y-auto flex-grow">
+            {children}
+          </section>
+        </div>
+      </main>
+      <Footer />
+    </>
   );
 };
 

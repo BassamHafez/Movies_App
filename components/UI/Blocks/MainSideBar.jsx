@@ -1,9 +1,16 @@
 "use client";
-import { useState, useEffect, useIsSmallScreen } from "@/shared/hooks";
-import { AlignRight, LogOut } from "@/shared/icons";
+import {
+  useState,
+  useEffect,
+  useIsSmallScreen,
+  useDispatch,
+  useSelector,
+} from "@/shared/hooks";
+import { AlignRight, LogOut, Bolt } from "@/shared/icons";
 import { motion, AnimatePresence, Link } from "@/shared/lib";
 import { sideBarPages } from "@/logic/static";
 import { LogoName } from "@/shared/components";
+import { filterSidebarActions } from "@/store/filterSidebar-slice";
 
 const MotionDiv = motion.div;
 const MotionSpan = motion.span;
@@ -12,6 +19,8 @@ const pathname = "bassam";
 const MainSideBar = () => {
   const isSmallScreen = useIsSmallScreen();
   const [isSmallSideBar, setIsSmallSideBar] = useState(isSmallScreen);
+  const filterType=useSelector((state)=>state.filterSidebar.type)
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isSmallScreen) {
@@ -21,6 +30,10 @@ const MainSideBar = () => {
 
   const toggleSidebar = () => {
     setIsSmallSideBar((prev) => !prev);
+  };
+
+  const setFilterType = (type) => {
+    dispatch(filterSidebarActions.setFilterType(type));
   };
 
   return (
@@ -57,13 +70,13 @@ const MainSideBar = () => {
       {/* Links */}
       <div className="relative flex flex-col gap-y-3">
         {sideBarPages.map((item, index) => {
-          const isActive = pathname === item.url;
+          const isActive = filterType === item.param;
 
           return (
-            <Link
+            <button
               key={`${item.title}_${index}`}
-              href={item.url}
-              className="relative"
+              className="relative cursor-pointer"
+              onClick={() => setFilterType(item.param)}
             >
               {isActive && (
                 <MotionDiv
@@ -91,11 +104,31 @@ const MainSideBar = () => {
                   </MotionSpan>
                 )}
               </div>
-            </Link>
+            </button>
           );
         })}
 
-        <button className="relative flex items-center gap-3 p-2 rounded-lg transition-all hover:bg-base-300 text-sm">
+        <div className="divider"></div>
+
+        <Link
+          href="/setting"
+          className="flex items-center gap-3 p-2 rounded-lg transition-all hover:bg-base-300 text-sm"
+        >
+          <Bolt className="size-5 shrink-0" strokeWidth={1.5} />
+          {isSmallSideBar ? null : (
+            <MotionSpan
+              layout
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -10 }}
+              transition={{ duration: 0.2 }}
+            >
+              Setting
+            </MotionSpan>
+          )}
+        </Link>
+
+        <button className="cursor-pointer relative flex items-center gap-3 p-2 rounded-lg transition-all hover:bg-base-300 text-sm">
           <LogOut className="size-5 shrink-0" strokeWidth={1.5} />
           {isSmallSideBar ? null : (
             <MotionSpan

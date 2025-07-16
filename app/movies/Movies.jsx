@@ -1,20 +1,31 @@
 "use client";
 import { mainFormsHandlerTypeRaw } from "@/util/http";
-import { useEffect, useQuery, useQueryClient, useState } from "@/shared/hooks";
+import {
+  useEffect,
+  useQuery,
+  useQueryClient,
+  useSelector,
+  useState,
+} from "@/shared/hooks";
 import MovieCard from "./MovieCard";
 import { Pagination } from "@/shared/components";
+import SkeletonCard from "@/components/UI/Blocks/SkeletonCard";
 
 const Movies = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const filterType = useSelector((state) => state.filterSidebar.type);
+  const urlPath =
+    filterType === "discover" ? `/discover/movie` : `/movie/${filterType}`;
   const queryClient = useQueryClient();
 
-  const { data } = useQuery({
-    queryKey: ["discoverMovies", currentPage],
+  const { data, isFetching } = useQuery({
+    queryKey: ["discoverMovies", currentPage, filterType],
     queryFn: () =>
       mainFormsHandlerTypeRaw({
-        type: "/discover/movie",
+        type: urlPath,
         params: {
           page: currentPage,
+          language: "en-US",
         },
       }),
     keepPreviousData: true,
@@ -37,30 +48,36 @@ const Movies = () => {
 
   return (
     <>
-      {data ? (
-        <section className="grid grid-cols-4 gap-y-16 p-6">
-          {data.results?.map((movie) => (
-            <div
-              key={movie.id}
-              className="col-span-1 flex justify-center items-center"
-            >
-              <MovieCard movie={movie} />
-            </div>
-          ))}
-
+      <section className="grid grid-cols-12 gap-y-16">
+        {!data || isFetching
+          ? Array.from({ length: 20 }).map((_, index) => (
+              <div
+                key={index}
+                className="col-span-3 flex justify-center items-center"
+              >
+                <SkeletonCard />
+              </div>
+            ))
+          : data.results?.map((movie) => (
+              <div
+                key={movie.id}
+                className="col-span-3 flex justify-center items-center"
+              >
+                <MovieCard movie={movie} />
+              </div>
+            ))}
+      </section>
+      {data && (
+        <div className="mb-8 mt-6">
           <Pagination
             totalPages={data.total_pages}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
           />
-        </section>
-      ) : (
-        <p>"No Data"</p>
+        </div>
       )}
     </>
   );
 };
 
 export default Movies;
-
-// const url = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc';
