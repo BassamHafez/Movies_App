@@ -5,7 +5,7 @@ import { Star, Play } from "@/shared/icons";
 
 const MovieCard = ({ movie }) => {
   return (
-    <div className="card bg-base-200 rounded w-[275px] overflow-hidden">
+    <div className="card bg-base-200 rounded w-[100%] xs:w-[275px] overflow-hidden">
       <figure className="relative overflow-hidden group">
         <Image
           src={`${process.env.NEXT_PUBLIC_IMAGE_PATH}/w500${movie.poster_path}`}
@@ -14,7 +14,7 @@ const MovieCard = ({ movie }) => {
           height={450}
           className="object-cover rounded"
         />
-        <div className="absolute top-[-102%] left-0 w-full h-full flex justify-center items-center bg-black/80  opacity-0 group-hover:top-0 group-hover:opacity-100 transition-all duration-500">
+        <div className="absolute -top-[-102%] left-0 w-full h-full flex justify-center items-center bg-black/80  opacity-0 group-hover:top-0 group-hover:opacity-100 transition-all duration-500">
           <div
             className="flex justify-center items-center border-2 border-solid border-main rounded-full size-18 cursor-pointer hover:bg-main/20 transition-all duration-500"
             style={{

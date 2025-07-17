@@ -21,7 +21,7 @@ const publicPages = [
   { name: "Packages", path: "packages" },
 ];
 
-const NavLinks = () => {
+const NavLinks = ({ dropdownMenu }) => {
   const [hash, setHash] = useState("");
   const pathname = usePathname();
   const token = useSelector((state) => state.userInfo.token) || "";
@@ -51,7 +51,7 @@ const NavLinks = () => {
   const handlePublicClick = (hash) => () => setHash(`#${hash}`);
 
   return (
-    <ul className="flex gap-6 relative">
+    <ul className={`flex gap-6 relative ${dropdownMenu ? "flex-col" : ""}`}>
       {navLinks.map((page) => {
         const urlPath = token ? page.path : `/#${page.path}`;
         const isActive = token
@@ -68,18 +68,18 @@ const NavLinks = () => {
               }`}
             >
               {page.name}
-              <AnimatePresence>
-                {isActive && (
+              {isActive && !dropdownMenu && (
+                <AnimatePresence>
                   <motion.div
                     layoutId="nav-glow"
                     className="absolute -inset-1 rounded-md bg-main/20 blur-sm"
                     transition={{ type: "spring", stiffness: 500, damping: 30 }}
                   />
-                )}
-              </AnimatePresence>
+                </AnimatePresence>
+              )}
             </Link>
-            <AnimatePresence>
-              {isActive && (
+            {isActive && !dropdownMenu && (
+              <AnimatePresence>
                 <motion.div
                   layoutId="nav-underline"
                   className="absolute -bottom-4 left-0 h-[2px] w-full bg-main rounded-full"
@@ -89,8 +89,8 @@ const NavLinks = () => {
                     damping: 30,
                   }}
                 />
-              )}
-            </AnimatePresence>
+              </AnimatePresence>
+            )}
           </li>
         );
       })}

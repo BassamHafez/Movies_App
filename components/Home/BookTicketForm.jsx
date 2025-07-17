@@ -15,11 +15,13 @@ const eventSeats = [
   { value: "3", label: "Three seat" },
   { value: "4", label: "Four seat" },
 ];
+const fieldClasses =
+  "col-span-4 sm:col-span-2 flex justify-center items-center";
 
 const BookTicketForm = () => {
   return (
-    <form className="grid grid-cols-2 gap-y-16 gap-x-8 flex-wrap ">
-      <div className="col-span-1 flex justify-center items-center">
+    <form className="grid grid-cols-4 gap-y-16 gap-x-8">
+      <div className={fieldClasses}>
         <input
           type="text"
           placeholder="Name"
@@ -27,7 +29,7 @@ const BookTicketForm = () => {
           name="name"
         />
       </div>
-      <div className="col-span-1 flex justify-center items-center">
+      <div className={fieldClasses}>
         <input
           type="tel"
           placeholder="Phone"
@@ -35,7 +37,7 @@ const BookTicketForm = () => {
           name="phone"
         />
       </div>
-      <div className="col-span-1 flex justify-center items-center">
+      <div className={fieldClasses}>
         <input
           type="text"
           placeholder="Email"
@@ -44,7 +46,7 @@ const BookTicketForm = () => {
         />
       </div>
 
-      <div className="col-span-1 flex justify-center items-center">
+      <div className={fieldClasses}>
         <select
           className="select select-ghost border-b-2 border-b-white w-full p-1 text-[16px]"
           name="seats"
@@ -56,7 +58,7 @@ const BookTicketForm = () => {
           ))}
         </select>
       </div>
-      <div className="col-span-1 flex justify-center items-center">
+      <div className={fieldClasses}>
         <input
           type="date"
           placeholder="Name"
@@ -64,7 +66,7 @@ const BookTicketForm = () => {
           name="date"
         />
       </div>
-      <div className="col-span-1 flex justify-center items-center">
+      <div className={fieldClasses}>
         <select
           className="select select-ghost border-b-2 border-b-white w-full p-1 text-[16px]"
           name="eventTime"
@@ -77,7 +79,7 @@ const BookTicketForm = () => {
           ))}
         </select>
       </div>
-      <div className="col-span-2 flex justify-center items-center mt-6">
+      <div className="col-span-4 flex justify-center items-center mt-6">
         <SubmitBtn>Apply</SubmitBtn>
       </div>
     </form>

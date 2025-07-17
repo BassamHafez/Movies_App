@@ -1,3 +1,4 @@
+import { LogoName } from "@/shared/components";
 import { smallLogo } from "@/shared/images";
 import { Image, Link } from "@/shared/lib";
 
@@ -37,10 +38,8 @@ const Footer = () => {
   return (
     <footer className="snap-start footer sm:footer-horizontal bg-base-200 text-base-content p-10">
       <aside>
-        <Image className="w-35" src={smallLogo} alt="logo" />
+       <LogoName size="text-6xl"/>
         <p>
-          Zixes Group.
-          <br />
           Unlimited movies, series, and originals since 2005
         </p>
       </aside>

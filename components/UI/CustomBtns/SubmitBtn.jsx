@@ -14,7 +14,7 @@ const SubmitBtn = ({
     <button
       type={type ? type : "submit"}
       className={`btn rounded-md  duration-300 ${colorClasses} ${classes} ${
-        myWidth ? myWidth : " w-[25em]"
+        myWidth ? myWidth : " w-[25em] max-w-[100%]"
       }`}
       onClick={onClick}
     >

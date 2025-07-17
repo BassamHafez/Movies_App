@@ -3,7 +3,7 @@ import { useSelector, useSignOut, useState } from "@/shared/hooks";
 import { MainModal, SecondaryBtn } from "@/shared/components";
 import { Link } from "@/shared/lib";
 
-const SignBtn = () => {
+const SignBtn = ({ fullWidth }) => {
   const [showModal, setShowModal] = useState(false);
 
   const token = useSelector((state) => state.userInfo.token);
@@ -11,10 +11,17 @@ const SignBtn = () => {
   return (
     <>
       {token ? (
-        <SecondaryBtn onClick={() => setShowModal(true)}>Sign Out</SecondaryBtn>
+        <SecondaryBtn
+          classes={fullWidth ? "w-full" : ""}
+          onClick={() => setShowModal(true)}
+        >
+          Sign Out
+        </SecondaryBtn>
       ) : (
         <Link href="/auth">
-          <SecondaryBtn>Sign In</SecondaryBtn>
+          <SecondaryBtn classes={fullWidth ? "w-full" : ""}>
+            Sign In
+          </SecondaryBtn>
         </Link>
       )}
 
@@ -25,6 +32,7 @@ const SignBtn = () => {
           signOut();
           setShowModal(false);
         }}
+        confirmTxt="Sign out"
       >
         <h3 className="font-bold text-2xl text-main flex items-center gap-2 ">
           Logout Confirmation
