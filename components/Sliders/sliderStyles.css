@@ -11,6 +11,7 @@
   width: 800px;
   height: 450px;
   border: 2px solid transparent;
+  overflow: hidden;
 }
 
 .publicHome_swiper .swiper-slide img {
@@ -40,7 +41,6 @@
 }
 
 /* movies header */
-
 .movies_swiper {
   width: 85%;
   aspect-ratio: 16/9;
@@ -78,3 +78,48 @@
   object-fit: cover;
   cursor: pointer;
 }
+
+@media screen and (width<1280px) {
+  .movies_swiper {
+    width: 100%;
+    aspect-ratio: 16/9;
+  }
+}
+
+@media screen and (width<1100px) {
+  .publicHome_swiper .swiper-slide {
+    width: 70%;
+    aspect-ratio: 16/9;
+  }
+
+  .publicHome_swiper .swiper-slide img {
+    width: 100%;
+    object-fit: cover;
+  }
+}
+
+@media screen and (width<1024px) {
+  .movies_swiper .mini_slider {
+    position: unset;
+    transform: translateX(0);
+    background: black;
+    height: 170px;
+  }
+}
+
+@media screen and (width<768px) {
+  .publicHome_swiper .swiper-slide {
+    width: 90%;
+    aspect-ratio: 16/9;
+  }
+
+  .publicHome_swiper .swiper-slide img {
+    width: 100%;
+    object-fit: cover;
+  }
+}
+/* @media screen and (width<550px) {
+  .movies_swiper .mini_slider {
+    display: none;
+  }
+} */

@@ -6,6 +6,7 @@
 
 @theme {
   --color-main: #d9a520;
+  --breakpoint-xs:485px
 }
 html {
   scroll-behavior: smooth;
@@ -42,4 +43,11 @@ button,
 label,
 select {
   outline: none;
+}
+
+@media screen and (width<768px) {
+  html,
+  body {
+    font-size: 14px;
+  }
 }

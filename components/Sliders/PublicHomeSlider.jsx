@@ -92,13 +92,13 @@ const PublicHomeSlider = () => {
         {sliderEvents.map((event) => (
           <SwiperSlide key={event.alt} className="relative">
             <Image src={event.src} alt={event.alt} />
-            <div className="absolute -bottom-1 left-0 w-full flex justify-between items-center p-4 bg-black/60">
+            <div className="absolute -bottom-1 left-0 w-full flex flex-wrap justify-between items-center gap-4 p-4 bg-black/60">
               <h2
-                className={`font-extrabold text-3xl text-main ${playFairFont}`}
+                className={`font-extrabold text-xl md:text-3xl text-main ${playFairFont}`}
               >
                 {event.title}
               </h2>
-              <ul className="flex gap-6">
+              <ul className="flex flex-wrap gap-x-6 gap-y-2">
                 <li className="flex items-center gap-2 text-sm">
                   <Clock3 className="size-5" /> {event.time}
                 </li>

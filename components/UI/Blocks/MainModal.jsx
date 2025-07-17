@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "@/shared/lib";
 import { SignBtn, SubmitBtn } from "@/shared/components";
 
-const MainModal = ({ isOpen, onClose, onConfirm, children }) => {
+const MainModal = ({ isOpen, onClose, onConfirm,confirmTxt, children }) => {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {
@@ -47,7 +47,7 @@ const MainModal = ({ isOpen, onClose, onConfirm, children }) => {
                 Close
               </button>
               <SubmitBtn type="button" onClick={onConfirm} myWidth="min-w-24">
-                Sign out
+                {confirmTxt}
               </SubmitBtn>
             </div>
           </motion.div>

@@ -34,15 +34,15 @@ const PublicHome = () => {
 
       <div className="bg-base-200 mb-40 scroll-mt-28" id="tickets">
         <MotionSectionWrapper horizontalShift classes="flex">
-          <div className="flex items-center h-full">
+          <div className="hidden lg:flex items-center h-full ">
             <Image
               src={owls}
-              alt="child In Cinema"
-              className="w-[700px] h-[650px] object-cover rounded-md"
+              alt="wonderful woman and man watching movie"
+              className="w-[43.75rem] h-[40.625rem] object-cover rounded-md"
             />
           </div>
           <div className="p-4 flex-1">
-            <section className="flex flex-col items-center gap-2">
+            <section className="flex flex-col items-center text-center gap-2">
               <MainTitle>Book A Ticket</MainTitle>
               <span className={`${playFairFont} text-main`}>
                 ~ Check out our place ~
@@ -56,7 +56,10 @@ const PublicHome = () => {
         </MotionSectionWrapper>
       </div>
 
-      <section id="methods" className="grid md:grid-cols-2 gap-2 place-content-center p-10 mb-40 scroll-mt-28">
+      <section
+        id="methods"
+        className="grid md:grid-cols-2 gap-2 place-content-center p-10 mb-40 scroll-mt-28"
+      >
         <MotionSectionWrapper
           horizontalShift
           classes="col-span-1  flex flex-col gap-8 justify-center px-4"
@@ -82,14 +85,17 @@ const PublicHome = () => {
       </section>
 
       <div className={`relative ${styles.fixed_bg}`}>
-        <div className="absolute inset-0 bg-black/60 z-1 flex justify-center items-center ">
+        <div className="absolute inset-0 bg-black/60 z-1 flex justify-center items-center text-center">
           <MainTitle>
             <span className="text-white">Enjoy every moment of your life</span>
           </MainTitle>
         </div>
       </div>
 
-      <div id="packages" className="scroll-mt-28 bg-base-200 border-2 border-main/50 max-w-9/10 mx-auto rounded-tr-full rounded-bl-full my-20 p-10">
+      <div
+        id="packages"
+        className="scroll-mt-28 bg-base-200 border-2 border-main/50 max-w-9/10 mx-auto rounded-tr-full rounded-bl-full my-20 p-10"
+      >
         <MotionSectionWrapper classes="flex flex-col items-center">
           <div className="flex flex-col justify-center items-center">
             <div className="text-center">

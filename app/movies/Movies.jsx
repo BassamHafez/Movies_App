@@ -7,9 +7,18 @@ import {
   useSelector,
   useState,
 } from "@/shared/hooks";
+import { MainTitle, Pagination, SkeletonCard } from "@/shared/components";
+import { separator } from "@/shared/images";
+import { Image } from "@/shared/lib";
 import MovieCard from "./MovieCard";
-import { Pagination } from "@/shared/components";
-import SkeletonCard from "@/components/UI/Blocks/SkeletonCard";
+
+const titleMap = {
+  discover: "Discover",
+  now_playing: "Now Playing",
+  top_rated: "Top Rated",
+  popular: "Popular",
+  upComing: "UpComing",
+};
 
 const Movies = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -48,21 +57,22 @@ const Movies = () => {
 
   return (
     <>
-      <section className="grid grid-cols-12 gap-y-16">
+      <div className="flex flex-col items-center gap-4 mb-12">
+        <MainTitle classes="text-center">
+          & {titleMap[filterType]} Movies &
+        </MainTitle>
+        <Image src={separator} alt="separator" />
+      </div>
+
+      <section className="flex items-center justify-evenly flex-wrap gap-y-16">
         {!data || isFetching
           ? Array.from({ length: 20 }).map((_, index) => (
-              <div
-                key={index}
-                className="col-span-3 flex justify-center items-center"
-              >
+              <div key={index} className="flex justify-center items-center">
                 <SkeletonCard />
               </div>
             ))
           : data.results?.map((movie) => (
-              <div
-                key={movie.id}
-                className="col-span-3 flex justify-center items-center"
-              >
+              <div key={movie.id} className="flex justify-center items-center">
                 <MovieCard movie={movie} />
               </div>
             ))}

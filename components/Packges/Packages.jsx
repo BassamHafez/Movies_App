@@ -5,7 +5,7 @@ import { motion } from "@/shared/lib";
 
 const Packages = () => {
   return (
-    <div className="grid grid-cols-3 gap-6 justify-center my-8">
+    <div className="grid xl:grid-cols-3 gap-6 justify-center my-8">
       {packagesData.map((pack, index) => (
         <motion.div
           initial={{ opacity: 0, scale: 0 }}
@@ -14,8 +14,8 @@ const Packages = () => {
           viewport={{ once: true, amount: 0.3 }}
           key={pack._id}
           className={`card w-96 rounded-xl min-h-80 bg-base-100 shadow-[0px_2px_10px_rgba(255,255,255,0.5)] ${
-            index === 1 ? "shadow-main/60" : " scale-80 hover:scale-100"
-          } hover:shadow-main/50 transition-all duration-600`}
+            index === 1 ? "shadow-main/60" : " xl:scale-80 hover:scale-100"
+          } xl:hover:shadow-main/50 transition-all duration-600`}
         >
           <div className="card-body">
             <span
