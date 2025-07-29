@@ -1,5 +1,4 @@
 "use client";
-import usePagination from "@/hooks/usePagination";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useRef, useState,useCallback } from "react";
@@ -26,7 +25,6 @@ export {
   useAnimation,
   useRouter,
   //custom hooks
-  usePagination,
   useValidation,
   useSignOut,
   useIsSmallScreen,

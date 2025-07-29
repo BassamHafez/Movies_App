@@ -11,7 +11,7 @@ const MainSearchInput = ({
   searchTerm = "",
   withBtn,
 }) => {
-  const [searchVal, setSearchVal] = useState(searchTerm);
+  const [searchVal, setSearchVal] = useState(searchTerm || "");
 
   const handleSubmit = (e) => {
     e.preventDefault();

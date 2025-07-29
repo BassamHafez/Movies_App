@@ -18,7 +18,6 @@ import {
 } from "@/shared/components";
 import { separator } from "@/shared/images";
 import { Image } from "@/shared/lib";
-import { debounce } from "lodash";
 
 const titleMap = {
   discover: "Discover",
@@ -67,10 +66,16 @@ const Movies = () => {
     if (data?.total_pages && currentPage < data.total_pages) {
       const nextPage = currentPage + 1;
       queryClient.prefetchQuery({
-        queryKey: ["discoverMovies", nextPage, filterType, filters, searchTerm],
+        queryKey: [
+          "discoverMovies",
+          nextPage,
+          filterType,
+          searchTerm,
+          JSON.stringify(filters),
+        ],
         queryFn: () =>
           mainFormsHandlerTypeRaw({
-            type: "/discover/movie",
+            type: urlPath,
             params: { page: nextPage, query: searchTerm, ...filters },
           }),
       });
@@ -81,14 +86,9 @@ const Movies = () => {
     setCurrentPage(1);
   }, [searchTerm, filters]);
 
-  const handleSearch = useCallback(
-    debounce((value) => setSearchTerm(value), 300),
-    []
-  );
+  const handleSearch = (val) => setSearchTerm(val);
+  const clearSearch = () => setSearchTerm("");
 
-  const clearSearch = () => {
-    setSearchTerm("");
-  };
   console.log(data);
   return (
     <>

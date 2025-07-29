@@ -10,14 +10,16 @@ import {
   WhiteBtn,
 } from "@/shared/components";
 import { adult } from "@/shared/images";
-
+//handle difference betw tv and movies
 export default async function MovieDetailsPage({ params }) {
   const awaitedParams = await params;
   const param = `${awaitedParams.movieDetails}`;
-  const movieId = param.split("-")[1];
+  const parts = param.split("-");
+  const type = parts[0].replace("/", "");
+  const movieId = parts[1];
 
   const movie = await mainFormsHandlerTypeRaw({
-    type: `/movie/${movieId}`,
+    type: `/${type}/${movieId}`,
     params: "?language=en-US&append_to_response=videos",
     serverReq: true,
   });
@@ -28,13 +30,22 @@ export default async function MovieDetailsPage({ params }) {
     (movie) => movie.type === "Trailer"
   );
 
+  const title = type === "tv" ? movie.name : movie.title;
+  const releaseDate = type === "tv" ? movie.first_air_date : movie.release_date;
+  const runTime = type === "tv" ? movie.episode_run_time : movie.runtime;
+  const runTimeHours = Math.floor(runTime / 60);
+  const runTimeMin = Math.floor(runTime % 60);
+  const runtTimeStr = `${
+    runTimeHours > 0 ? `${runTimeHours}h` : ""
+  } ${runTimeMin}m`;
+
   return (
     <main className="relative h-[90vh]">
       <div className="fixed inset-0 size-full -z-1">
         <div className="absolute backdrop-blur-[2px] inset-0 bg-black/80 z-10" />
         <Image
           src={`${process.env.NEXT_PUBLIC_IMAGE_PATH}/w1920${movie.backdrop_path}`}
-          alt={movie.title}
+          alt={title}
           fill
           sizes="100%"
           className="object-cover"
@@ -46,7 +57,7 @@ export default async function MovieDetailsPage({ params }) {
           <div className="relative w-[300px] h-[450px]">
             <Image
               src={`${process.env.NEXT_PUBLIC_IMAGE_PATH}/w500${movie.poster_path}`}
-              alt={movie.title}
+              alt={title}
               fill
               sizes="100%"
               priority
@@ -74,10 +85,10 @@ export default async function MovieDetailsPage({ params }) {
                   data-tip="Go to home page"
                   style={{ textDecoration: "underline" }}
                 >
-                  {movie.title}
+                  {title}
                 </Link>
               ) : (
-                <span className="text-white">{movie.title}</span>
+                <span className="text-white">{title}</span>
               )}
               {movie.adult && (
                 <Image
@@ -100,13 +111,10 @@ export default async function MovieDetailsPage({ params }) {
           </div>
           <div className="flex items-center gap-4">
             <p className="text-gray-400 text-sm flex items-center gap-2">
-              <CalendarFold className="size-4" /> {movie.release_date}
+              <CalendarFold className="size-4" /> {releaseDate}
             </p>
             <p className="text-gray-400 text-sm flex items-center gap-1">
-              <Clock3 className="size-4" />{" "}
-              <span>
-                {Math.floor(movie.runtime / 60)}h {movie.runtime % 60}m
-              </span>
+              <Clock3 className="size-4" /> <span>{runtTimeStr}</span>
             </p>
           </div>
 

@@ -37,11 +37,13 @@ import Toaster from "@/components/UI/Blocks/Toaster";
 import LoadingCards from "@/components/UI/Animations/LoadingCards";
 import FilerHeader from "@/components/UI/Blocks/FilerHeader";
 import NoResultsFound from "@/components/UI/Blocks/NoResultsFound";
+import TvsHero from "@/components/Hero/TvsHero";
 
 export {
   Navbar,
   Footer,
   Hero,
+  TvsHero,
   SearchField,
   Packages,
   PublicHome,
@@ -70,5 +72,5 @@ export {
   LoadingCards,
   FilerHeader,
   MainSearchInput,
-  NoResultsFound
+  NoResultsFound,
 };

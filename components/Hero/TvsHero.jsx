@@ -4,12 +4,12 @@ import { mainFormsHandlerTypeRaw } from "@/util/http";
 import { useQuery } from "@/shared/hooks";
 const currentPage = 1;
 
-const MoviesHero = () => {
+const TvsHero = () => {
   const { data } = useQuery({
-    queryKey: ["discoverMovies", currentPage, "now_playing"],
+    queryKey: ["discoverTvs", currentPage, "on_the_air"],
     queryFn: () =>
       mainFormsHandlerTypeRaw({
-        type: `/movie/now_playing`,
+        type: `/tv/on_the_air`,
         params: {
           page: currentPage,
         },
@@ -17,13 +17,14 @@ const MoviesHero = () => {
     staleTime: 1000 * 60 * 60,
   });
 
-  const movies = data?.results;
+  const tvShows = data?.results;
 
   return (
     <header className="mb-20 flex justify-center">
-      <MoviesHeroSlider movies={movies} />
+      <MoviesHeroSlider movies={tvShows} isTvShow />
     </header>
   );
 };
 
-export default MoviesHero;
+export default TvsHero;
+

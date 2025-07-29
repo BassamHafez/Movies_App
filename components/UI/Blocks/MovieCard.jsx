@@ -1,15 +1,15 @@
 import { playFairFont } from "@/logic/static";
-import { Image } from "@/shared/lib";
+import { Image, Link } from "@/shared/lib";
 import { Star, Play } from "@/shared/icons";
-import CardControllers from "./CardControllers";
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, isTvShow }) => {
+  const title = isTvShow ? movie.name : movie.title;
   return (
     <div className="card bg-base-200 rounded w-[100%] xs:w-[17.1875rem] overflow-hidden">
       <figure className="relative overflow-hidden group w-[275px] h-[450px]">
         <Image
           src={`${process.env.NEXT_PUBLIC_IMAGE_PATH}/w342${movie.poster_path}`}
-          alt={movie.title}
+          alt={title}
           fill
           sizes="100%"
           className="object-cover rounded"
@@ -21,22 +21,22 @@ const MovieCard = ({ movie }) => {
               borderRightStyle: "dashed",
             }}
           >
-            <Play className="size-10" strokeWidth={1.5} />
+            <Link href={`/${isTvShow ? "tv" : "movie"}-${movie.id}`}>
+              <Play className="size-10" strokeWidth={1.5} />
+            </Link>
           </div>
         </div>
       </figure>
       <div className="card-body px-3 py-4">
         <div className="flex justify-between items-center w-full">
           <h2 className={`font-bold text-lg truncate ${playFairFont}`}>
-            {movie.title}{" "}
+            {title}{" "}
           </h2>
           <span className="flex gap-1 items-center text-xs">
             <Star className="fill-main stroke-0 size-4" />{" "}
             {Number(movie.vote_average).toFixed(1)}
           </span>
         </div>
-
-        <CardControllers movieId={movie.id} />
       </div>
     </div>
   );

@@ -1,9 +1,13 @@
 "use client";
 import { Image } from "@/shared/lib";
-import { useQuery, useState } from "@/shared/hooks";
-import { MainBtn, RatingStars, SecondaryBtn } from "@/shared/components";
+import { useState } from "@/shared/hooks";
+import {
+  MainBtn,
+  NoResultsFound,
+  RatingStars,
+  SecondaryBtn,
+} from "@/shared/components";
 import { Play } from "@/shared/icons";
-import { mainFormsHandlerTypeRaw } from "@/util/http";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/free-mode";
@@ -11,24 +15,9 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import "./sliderStyles.css";
 import { FreeMode, Thumbs } from "swiper/modules";
-const currentPage = 1;
 
-const MoviesHeroSlider = () => {
+const MoviesHeroSlider = ({ movies, isTvShow = false }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
-
-  const { data } = useQuery({
-    queryKey: ["discoverMovies", currentPage, "now_playing"],
-    queryFn: () =>
-      mainFormsHandlerTypeRaw({
-        type: `/movie/now_playing`,
-        params: {
-          page: currentPage,
-        },
-      }),
-    staleTime: 1000 * 60 * 60,
-  });
-
-  const movies = data?.results;
 
   return (
     <div className="movies_swiper relative lg:border-2 border-main/30 rounded-xl bg-base-200">
@@ -44,7 +33,7 @@ const MoviesHeroSlider = () => {
             <SwiperSlide key={movie.id} className="relative">
               <Image
                 src={`${process.env.NEXT_PUBLIC_IMAGE_PATH}/w1280${movie.backdrop_path}`}
-                alt={movie.title}
+                alt={isTvShow ? movie.name : movie.title}
                 fill
                 sizes="100%"
                 className="rounded-xl"
@@ -53,13 +42,13 @@ const MoviesHeroSlider = () => {
               <div className="flex md:items-center px-4 absolute inset-0  bg-gradient-to-r from-black via-black/70 to-transparent rounded-xl">
                 <div className="sm:max-w-3/4 lg:max-w-1/2 mt-8 md:mb-[10%] lg:mb-[20%] 2xl:mb-[10%] max-h-1/2">
                   <h1 className="font-extrabold text-2xl sm:text-3xl">
-                    {movie.title}
+                    {isTvShow ? movie.name : movie.title}
                   </h1>
                   <div className="hidden xs:block">
                     <div className="flex gap-4 mb-4 mt-1">
                       <RatingStars rateNum={movie.vote_average} />
                       <span className="text-gray-400 text-sm">
-                        {movie.release_date}
+                        {isTvShow ? movie.first_air_date : movie.release_date}
                       </span>
                     </div>
                     <p className="text-sm line-clamp-2 xl:line-clamp-4 2xl:line-clamp-6">
@@ -82,7 +71,7 @@ const MoviesHeroSlider = () => {
             </SwiperSlide>
           ))
         ) : (
-          <p>no data</p>
+          <NoResultsFound />
         )}
       </Swiper>
       <Swiper
@@ -120,7 +109,7 @@ const MoviesHeroSlider = () => {
             <SwiperSlide key={`${movie.id}_${index}`}>
               <Image
                 src={`${process.env.NEXT_PUBLIC_IMAGE_PATH}/w500${movie.poster_path}`}
-                alt={movie.title}
+                alt={isTvShow ? movie.name : movie.title}
                 width={300}
                 height={450}
               />
