@@ -18,4 +18,6 @@ export {
   Bolt,
   TvMinimalPlay,
   Star,
+  Filter,
+  BrushCleaning
 } from "lucide-react";

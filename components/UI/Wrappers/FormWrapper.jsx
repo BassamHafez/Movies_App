@@ -10,7 +10,6 @@ const FormWrapper = ({ children, classes, formType }) => {
   const dispatch = useDispatch();
 
   const saveDataIntoRedux = (data) => {
-    console.log(data)
     dispatch(userActions.setUserInfo(data?.user));
     dispatch(userActions.setToken(data?.token));
   };
@@ -40,7 +39,6 @@ const FormWrapper = ({ children, classes, formType }) => {
           {
             onSuccess: (data) => {
               if (data?.message === "success") {
-                console.log(data);
                 resetForm();
                 saveDataIntoRedux(data);
                 resolve();

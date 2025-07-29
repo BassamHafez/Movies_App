@@ -6,9 +6,15 @@ const useSignOut = () => {
   const router = useRouter();
 
   const signOut = () => {
-    localStorage.removeItem("token");
-    dispatch(userActions.clearAuth());
-    router.push("/auth");
+    try {
+      localStorage.removeItem("token");
+      dispatch(userActions.clearAuth());
+      router.push("/auth");
+      return "success"
+    } catch (error) {
+      console.log(error);
+      return "faild"
+    }
   };
 
   return signOut;

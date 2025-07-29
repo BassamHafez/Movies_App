@@ -11,16 +11,17 @@ import { motion, AnimatePresence, Link } from "@/shared/lib";
 import { sideBarPages } from "@/logic/static";
 import { LogoName } from "@/shared/components";
 import { filterSidebarActions } from "@/store/filterSidebar-slice";
+import FiltersSection from "./FiltersSection";
 
 const MotionDiv = motion.div;
 const MotionSpan = motion.span;
-const pathname = "bassam";
 
 const MainSideBar = () => {
   const isSmallScreen = useIsSmallScreen();
   const [isSmallSideBar, setIsSmallSideBar] = useState(isSmallScreen);
-  const filterType=useSelector((state)=>state.filterSidebar.type)
+
   const dispatch = useDispatch();
+  const filterType = useSelector((state) => state.filterSidebar.type);
 
   useEffect(() => {
     if (isSmallScreen) {
@@ -40,7 +41,7 @@ const MainSideBar = () => {
     <MotionDiv
       animate={{ width: isSmallSideBar ? "4.25rem" : "13.75rem" }}
       transition={{ duration: 0.3 }}
-      className="min-h-[85vh] rounded-xl bg-base-200 shadow-md p-4 flex flex-col gap-6 overflow-hidden"
+      className="min-h-[82vh] rounded-xl bg-base-200 shadow-md p-4 flex flex-col gap-6 overflow-hidden"
     >
       {/* Header */}
       <div className="flex items-center justify-between">
@@ -69,7 +70,7 @@ const MainSideBar = () => {
 
       {/* Links */}
       <div className="relative flex flex-col gap-y-3">
-        {sideBarPages.map((item, index) => {
+        {sideBarPages?.map((item, index) => {
           const isActive = filterType === item.param;
 
           return (
@@ -107,27 +108,7 @@ const MainSideBar = () => {
             </button>
           );
         })}
-
-        <div className="divider"></div>
-
-        <Link
-          href="/setting"
-          className="flex items-center gap-3 p-2 rounded-lg transition-all hover:bg-base-300 text-sm"
-        >
-          <Bolt className="size-5 shrink-0" strokeWidth={1.5} />
-          {isSmallSideBar ? null : (
-            <MotionSpan
-              layout
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -10 }}
-              transition={{ duration: 0.2 }}
-            >
-              Setting
-            </MotionSpan>
-          )}
-        </Link>
-
+        <div className="divider"/>
         <button className="cursor-pointer relative flex items-center gap-3 p-2 rounded-lg transition-all hover:bg-base-300 text-sm">
           <LogOut className="size-5 shrink-0" strokeWidth={1.5} />
           {isSmallSideBar ? null : (

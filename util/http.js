@@ -1,5 +1,4 @@
 "use server";
-
 import axios from "axios";
 const validFormMethods = ["post", "patch", "put"];
 
@@ -25,29 +24,39 @@ export const mainFormsHandlerTypeRaw = async ({
   formData,
   method,
   params,
+  serverReq,
 }) => {
   const headers = {
     accept: "application/json",
     Authorization: `Bearer ${process.env.MOVIE_TOKEN}`,
   };
 
-  const url = `${process.env.NEXT_PUBLIC_MOVIE_URL}${type}`;
-  
+  const url = `${
+    serverReq ? process.env.MOVIE_URL : process.env.NEXT_PUBLIC_MOVIE_URL
+  }${type}`;
+
   try {
     let response = null;
     if (validFormMethods.includes(method)) {
-      console.log("hiii")
       response = await axios[method](url, formData, {
         headers,
       });
     } else {
-        console.log("bye")
-      response = await axios.get(url, {
-        headers,
-        params,
-      });
+      //get
+      if (serverReq) {
+        response = await fetch(`${url}${params}`, {
+          headers,
+          next: { revalidate: 3600 },
+        });
+        return response.json();
+      } else {
+        response = await axios.get(url, {
+          headers,
+          params,
+        });
+        return response.data;
+      }
     }
-    return response.data;
   } catch (error) {
     console.error(error);
     throw error;

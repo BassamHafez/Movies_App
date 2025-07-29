@@ -1,17 +1,17 @@
 import { playFairFont } from "@/logic/static";
-import { SubmitBtn, WhiteBtn } from "@/shared/components";
 import { Image } from "@/shared/lib";
 import { Star, Play } from "@/shared/icons";
+import CardControllers from "./CardControllers";
 
 const MovieCard = ({ movie }) => {
   return (
-    <div className="card bg-base-200 rounded w-[100%] xs:w-[275px] overflow-hidden">
-      <figure className="relative overflow-hidden group">
+    <div className="card bg-base-200 rounded w-[100%] xs:w-[17.1875rem] overflow-hidden">
+      <figure className="relative overflow-hidden group w-[275px] h-[450px]">
         <Image
-          src={`${process.env.NEXT_PUBLIC_IMAGE_PATH}/w500${movie.poster_path}`}
+          src={`${process.env.NEXT_PUBLIC_IMAGE_PATH}/w342${movie.poster_path}`}
           alt={movie.title}
-          width={275}
-          height={450}
+          fill
+          sizes="100%"
           className="object-cover rounded"
         />
         <div className="absolute -top-[-102%] left-0 w-full h-full flex justify-center items-center bg-black/80  opacity-0 group-hover:top-0 group-hover:opacity-100 transition-all duration-500">
@@ -36,12 +36,7 @@ const MovieCard = ({ movie }) => {
           </span>
         </div>
 
-        <div className="card-actions flex-col justify-center items-center mt-2">
-          <WhiteBtn classes="btn-sm min-w-[90%]">Watch Trailer</WhiteBtn>
-          <SubmitBtn myWidth="min-w-[90%]" classes="btn-sm">
-            Details
-          </SubmitBtn>
-        </div>
+        <CardControllers movieId={movie.id} />
       </div>
     </div>
   );

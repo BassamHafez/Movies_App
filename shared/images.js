@@ -12,7 +12,7 @@ import fireTV from "@/assets/images/fireTV.png";
 import tv from "@/assets/images/tv.png";
 import chromecast from "@/assets/images/chromecast.png";
 import googleIcon from "@/assets/images/googleIcon.png";
-
+import adult from "@/assets/images/18.png";
 //webp
 import tvShows from "@/assets/images/tvShows.webp";
 
@@ -48,5 +48,6 @@ export {
   fireTV,
   tv,
   chromecast,
-  googleIcon
+  googleIcon,
+  adult,
 };

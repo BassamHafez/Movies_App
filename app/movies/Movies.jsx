@@ -1,16 +1,24 @@
 "use client";
 import { mainFormsHandlerTypeRaw } from "@/util/http";
 import {
+  useCallback,
   useEffect,
   useQuery,
   useQueryClient,
   useSelector,
   useState,
 } from "@/shared/hooks";
-import { MainTitle, Pagination, SkeletonCard } from "@/shared/components";
+import {
+  FilerHeader,
+  LoadingCards,
+  MainTitle,
+  MovieCard,
+  NoResultsFound,
+  Pagination,
+} from "@/shared/components";
 import { separator } from "@/shared/images";
 import { Image } from "@/shared/lib";
-import MovieCard from "./MovieCard";
+import { debounce } from "lodash";
 
 const titleMap = {
   discover: "Discover",
@@ -22,19 +30,33 @@ const titleMap = {
 
 const Movies = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const filterType = useSelector((state) => state.filterSidebar.type);
-  const urlPath =
-    filterType === "discover" ? `/discover/movie` : `/movie/${filterType}`;
+  const filters = useSelector((state) => state.filterSidebar.filters);
   const queryClient = useQueryClient();
 
+  const urlPath = searchTerm
+    ? "/search/movie"
+    : filterType === "discover"
+    ? `/discover/movie`
+    : `/movie/${filterType}`;
+
   const { data, isFetching } = useQuery({
-    queryKey: ["discoverMovies", currentPage, filterType],
+    queryKey: [
+      "discoverMovies",
+      currentPage,
+      filterType,
+      searchTerm,
+      JSON.stringify(filters),
+    ],
     queryFn: () =>
       mainFormsHandlerTypeRaw({
         type: urlPath,
         params: {
           page: currentPage,
-          language: "en-US",
+          query: searchTerm,
+          ...filters,
         },
       }),
     keepPreviousData: true,
@@ -45,16 +67,29 @@ const Movies = () => {
     if (data?.total_pages && currentPage < data.total_pages) {
       const nextPage = currentPage + 1;
       queryClient.prefetchQuery({
-        queryKey: ["discoverMovies", nextPage],
+        queryKey: ["discoverMovies", nextPage, filterType, filters, searchTerm],
         queryFn: () =>
           mainFormsHandlerTypeRaw({
             type: "/discover/movie",
-            params: { page: nextPage },
+            params: { page: nextPage, query: searchTerm, ...filters },
           }),
       });
     }
   }, [data, currentPage, queryClient]);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, filters]);
+
+  const handleSearch = useCallback(
+    debounce((value) => setSearchTerm(value), 300),
+    []
+  );
+
+  const clearSearch = () => {
+    setSearchTerm("");
+  };
+  console.log(data);
   return (
     <>
       <div className="flex flex-col items-center gap-4 mb-12">
@@ -64,20 +99,34 @@ const Movies = () => {
         <Image src={separator} alt="separator" />
       </div>
 
-      <section className="flex items-center justify-evenly flex-wrap gap-y-16">
-        {!data || isFetching
-          ? Array.from({ length: 20 }).map((_, index) => (
-              <div key={index} className="flex justify-center items-center">
-                <SkeletonCard />
-              </div>
-            ))
-          : data.results?.map((movie) => (
-              <div key={movie.id} className="flex justify-center items-center">
-                <MovieCard movie={movie} />
-              </div>
-            ))}
+      <FilerHeader
+        classes="mb-6 px-2"
+        searchTerm={searchTerm}
+        handleSearch={handleSearch}
+        clearSearch={clearSearch}
+      />
+
+      <section className="flex items-center justify-evenly flex-wrap gap-y-16 gap-x-4">
+        {!data || isFetching ? (
+          <LoadingCards />
+        ) : data.results?.length > 0 ? (
+          data.results?.map(
+            (movie) =>
+              movie.poster_path &&
+              movie.backdrop_path && (
+                <div
+                  key={movie.id}
+                  className="flex justify-center items-center"
+                >
+                  <MovieCard movie={movie} />
+                </div>
+              )
+          )
+        ) : (
+          <NoResultsFound />
+        )}
       </section>
-      {data && (
+      {data && data.results?.length > 0 && (
         <div className="mb-8 mt-6">
           <Pagination
             totalPages={data.total_pages}

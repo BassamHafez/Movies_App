@@ -118,8 +118,4 @@
     object-fit: cover;
   }
 }
-/* @media screen and (width<550px) {
-  .movies_swiper .mini_slider {
-    display: none;
-  }
-} */
+

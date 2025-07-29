@@ -2,9 +2,17 @@
 import { useEffect } from "@/shared/hooks";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "@/shared/lib";
-import { SignBtn, SubmitBtn } from "@/shared/components";
+import { SubmitBtn } from "@/shared/components";
 
-const MainModal = ({ isOpen, onClose, onConfirm,confirmTxt, children }) => {
+const MainModal = ({
+  isOpen,
+  onClose,
+  onConfirm,
+  confirmTxt="",
+  children,
+  myWidth="",
+  noActions=false,
+}) => {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {
@@ -35,21 +43,29 @@ const MainModal = ({ isOpen, onClose, onConfirm,confirmTxt, children }) => {
         >
           <motion.div
             onClick={(e) => e.stopPropagation()}
-            className="modal-box rounded shadow-xs shadow-white/20"
+            className={`modal-box rounded shadow-xs shadow-white/20 ${myWidth}`}
             initial={{ y: 50, opacity: 0, scale: 0.95 }}
             animate={{ y: 0, opacity: 1, scale: 1 }}
             exit={{ y: 50, opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
             {children}
-            <div className="modal-action">
-              <button onClick={onClose} className="btn btn-secondary rounded">
-                Close
-              </button>
-              <SubmitBtn type="button" onClick={onConfirm} myWidth="min-w-24">
-                {confirmTxt}
-              </SubmitBtn>
-            </div>
+            {!noActions && (
+              <div className="modal-action">
+                <button onClick={onClose} className="btn btn-secondary rounded">
+                  Close
+                </button>
+                {confirmTxt && (
+                  <SubmitBtn
+                    type="button"
+                    onClick={onConfirm}
+                    myWidth="min-w-24"
+                  >
+                    {confirmTxt}
+                  </SubmitBtn>
+                )}
+              </div>
+            )}
           </motion.div>
         </motion.div>
       )}
