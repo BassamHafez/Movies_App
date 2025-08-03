@@ -5,13 +5,13 @@ import {
   useIsSmallScreen,
   useDispatch,
   useSelector,
+  usePathname,
 } from "@/shared/hooks";
-import { AlignRight, LogOut, Bolt } from "@/shared/icons";
+import { AlignRight, LogOut,Bolt } from "@/shared/icons";
 import { motion, AnimatePresence, Link } from "@/shared/lib";
-import { sideBarPages } from "@/logic/static";
+import { moviesSideBarPages, tvsSidebarPages } from "@/logic/static";
 import { LogoName } from "@/shared/components";
 import { filterSidebarActions } from "@/store/filterSidebar-slice";
-import FiltersSection from "./FiltersSection";
 
 const MotionDiv = motion.div;
 const MotionSpan = motion.span;
@@ -19,9 +19,11 @@ const MotionSpan = motion.span;
 const MainSideBar = () => {
   const isSmallScreen = useIsSmallScreen();
   const [isSmallSideBar, setIsSmallSideBar] = useState(isSmallScreen);
-
   const dispatch = useDispatch();
   const filterType = useSelector((state) => state.filterSidebar.type);
+  const pathname = usePathname();
+  const sidebarPages =
+    pathname === "/movies" ? moviesSideBarPages : tvsSidebarPages;
 
   useEffect(() => {
     if (isSmallScreen) {
@@ -70,7 +72,7 @@ const MainSideBar = () => {
 
       {/* Links */}
       <div className="relative flex flex-col gap-y-3">
-        {sideBarPages?.map((item, index) => {
+        {sidebarPages?.map((item, index) => {
           const isActive = filterType === item.param;
 
           return (
@@ -108,7 +110,25 @@ const MainSideBar = () => {
             </button>
           );
         })}
-        <div className="divider"/>
+        <div className="divider" />
+        <Link
+          href="/account-setting"
+          className="cursor-pointer relative flex items-center gap-3 p-2 rounded-lg transition-all hover:bg-base-300 text-sm"
+        >
+          <Bolt className="size-5 shrink-0" strokeWidth={1.5} />
+          {isSmallSideBar ? null : (
+            <MotionSpan
+              layout
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -10 }}
+              transition={{ duration: 0.2 }}
+            >
+              Setting
+            </MotionSpan>
+          )}
+        </Link>
+
         <button className="cursor-pointer relative flex items-center gap-3 p-2 rounded-lg transition-all hover:bg-base-300 text-sm">
           <LogOut className="size-5 shrink-0" strokeWidth={1.5} />
           {isSmallSideBar ? null : (

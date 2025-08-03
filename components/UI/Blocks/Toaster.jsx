@@ -11,6 +11,7 @@ const Toaster = () => {
       draggable
       pauseOnHover={false}
       pauseOnFocusLoss={false}
+      theme="dark"
       className={`text-sm gap-x-4 ${playFairFont}`}
     />
   );

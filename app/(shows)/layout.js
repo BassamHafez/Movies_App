@@ -9,7 +9,7 @@ const RootLayout = ({ children }) => {
   return (
     <>
       <main className="h-[90vh] overflow-y-hidden mb-16">
-        <div className="flex gap-2 py-8">
+        <div className="flex gap-2 py-12">
           <aside className="max-w-[300px] px-4">
             <MainSideBar />
           </aside>

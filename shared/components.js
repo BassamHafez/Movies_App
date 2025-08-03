@@ -38,6 +38,7 @@ import LoadingCards from "@/components/UI/Animations/LoadingCards";
 import FilerHeader from "@/components/UI/Blocks/FilerHeader";
 import NoResultsFound from "@/components/UI/Blocks/NoResultsFound";
 import TvsHero from "@/components/Hero/TvsHero";
+import ShowsContentHeader from "@/components/UI/Blocks/ShowsContentHeader";
 
 export {
   Navbar,
@@ -73,4 +74,5 @@ export {
   FilerHeader,
   MainSearchInput,
   NoResultsFound,
+  ShowsContentHeader
 };

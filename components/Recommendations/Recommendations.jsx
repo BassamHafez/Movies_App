@@ -9,18 +9,22 @@ const Recommendations = async ({ id }) => {
   });
 
   return (
-    <main className="p-4">
-      <MainTitle>
-        <span className="text-white">Recommendations</span>
-      </MainTitle>
-      <section className="flex items-center justify-evenly flex-wrap gap-y-16 gap-x-4 mt-6">
-        {recommendations?.results.map((items) => (
-          <div key={items.id} className="flex justify-center items-center">
-            <MovieCard movie={items} />
-          </div>
-        ))}
-      </section>
-    </main>
+    <>
+      {recommendations && recommendations?.results?.length > 0 ? (
+        <main className="p-8">
+          <MainTitle>
+            <span className="text-white">Recommendations</span>
+          </MainTitle>
+          <section className="flex items-center justify-evenly flex-wrap gap-y-16 gap-x-4 mt-6">
+            {recommendations?.results.map((items) => (
+              <div key={items.id} className="flex justify-center items-center">
+                <MovieCard movie={items} />
+              </div>
+            ))}
+          </section>
+        </main>
+      ) : null}
+    </>
   );
 };
 

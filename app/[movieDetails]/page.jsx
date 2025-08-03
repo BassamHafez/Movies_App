@@ -161,18 +161,18 @@ export default async function MovieDetailsPage({ params }) {
         </div>
       </section>
 
-      <section className=" my-8 p-8">
-        <MainTitle>
-          <span className="text-white">Official Trailers</span>
-        </MainTitle>
-        <div className="flex flex-wrap gap-2 items-center justify-evenly">
-          <TrailerVideo officialTrailers={officialTrailers} />
-        </div>
-      </section>
+      {officialTrailers && officialTrailers.length > 0 && (
+        <section className=" my-8 p-8">
+          <MainTitle>
+            <span className="text-white">Official Trailers</span>
+          </MainTitle>
+          <div className="flex flex-wrap gap-2 items-center justify-evenly">
+            <TrailerVideo officialTrailers={officialTrailers} />
+          </div>
+        </section>
+      )}
 
-      <section>
-        <Recommendations id={movieId} />
-      </section>
+      <Recommendations id={movieId} />
     </main>
   );
 }

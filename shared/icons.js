@@ -19,5 +19,6 @@ export {
   TvMinimalPlay,
   Star,
   Filter,
-  BrushCleaning
+  BrushCleaning,
+  Rocket,
 } from "lucide-react";

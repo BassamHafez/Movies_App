@@ -22,7 +22,7 @@ export const signFormsHandler = async ({ type, formData }) => {
 export const mainFormsHandlerTypeRaw = async ({
   type,
   formData,
-  method,
+  method="get",
   params,
   serverReq,
 }) => {

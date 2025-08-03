@@ -4,7 +4,7 @@ import {
   Play,
   Hourglass,
   ScanHeart,
-  TvMinimalPlay,
+  Rocket,
 } from "@/shared/icons";
 import { Playfair_Display, Inter } from "next/font/google";
 
@@ -61,7 +61,7 @@ const packagesData = [
   },
 ];
 
-const sideBarPages = [
+const moviesSideBarPages = [
   {
     title: "Discover",
     param: "discover",
@@ -87,11 +87,34 @@ const sideBarPages = [
     param: "upcoming",
     icon: Hourglass,
   },
+];
+
+const tvsSidebarPages = [
   {
-    title: "WatchList",
-    param: "",
-    icon: TvMinimalPlay,
+    title: "Discover",
+    param: "discover",
+    icon: House,
+  },
+  {
+    title: "Popular",
+    param: "popular",
+    icon: Heart,
+  },
+  {
+    title: "Top Rated",
+    param: "top_rated",
+    icon: ScanHeart,
+  },
+  {
+    title: "Airing Today",
+    param: "airing_today",
+    icon: Rocket,
+  },
+  {
+    title: "On The Air",
+    param: "on_the_air",
+    icon: Play,
   },
 ];
 
-export { packagesData, playFairFont, interFont, sideBarPages };
+export { packagesData, playFairFont, interFont, moviesSideBarPages,tvsSidebarPages };

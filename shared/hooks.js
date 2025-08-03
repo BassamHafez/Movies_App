@@ -9,6 +9,7 @@ import useSignOut from "@/hooks/useSignOut";
 import { useRouter } from "next/navigation";
 import { useIsSmallScreen } from "@/hooks/useIsSmallScreen";
 import useTrailer from "@/hooks/useWatchTrailer";
+import usePlayTrailer from "@/hooks/usePlayTrailer";
 
 export {
   useState,
@@ -28,5 +29,6 @@ export {
   useValidation,
   useSignOut,
   useIsSmallScreen,
-  useTrailer
+  useTrailer,
+  usePlayTrailer
 };
