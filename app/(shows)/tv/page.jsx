@@ -3,7 +3,7 @@ import TvShows from "./TvShows";
 
 const page = () => {
   return (
-    <main>
+    <main> 
       <TvsHero />
       <TvShows/>
     </main>

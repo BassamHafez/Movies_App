@@ -5,7 +5,11 @@ import {
   useQuery,
   useQueryClient,
   useSelector,
+  useDispatch,
   useState,
+  useRouter,
+  useSearchParams,
+  useRef,
 } from "@/shared/hooks";
 import {
   LoadingCards,
@@ -14,14 +18,65 @@ import {
   Pagination,
   ShowsContentHeader,
 } from "@/shared/components";
+import { filterSidebarActions } from "@/store/filterSidebar-slice";
 
 const Movies = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  const isInitialMount = useRef(true);
+
+  // --- 1. Sync Redux & local states from URL ---
+  useEffect(() => {
+    const urlPage = Number(searchParams.get("page")) || 1;
+    const urlSearch = searchParams.get("search") || "";
+    const urlType = searchParams.get("type") || "discover";
+    const urlAdult = searchParams.get("adult") === "true";
+    const urlYear = searchParams.get("year")
+      ? Number(searchParams.get("year"))
+      : null;
+
+    setCurrentPage(urlPage);
+    setSearchTerm(urlSearch);
+    dispatch(
+      filterSidebarActions.setAllFilters({
+        include_adult: urlAdult,
+        primary_release_year: urlYear,
+      })
+    );
+    dispatch(filterSidebarActions.setFilterType(urlType));
+    setIsHydrated(true);
+  }, [searchParams]);
 
   const filterType = useSelector((state) => state.filterSidebar.type);
   const filters = useSelector((state) => state.filterSidebar.filters);
-  const queryClient = useQueryClient();
+
+  // --- 2. Update URL when states change ---
+  useEffect(() => {
+    if (!isHydrated) return;
+
+    const params = new URLSearchParams();
+    if (currentPage > 1) params.set("page", currentPage);
+    if (searchTerm) params.set("search", searchTerm);
+    if (filterType) params.set("type", filterType);
+    if (filters.include_adult) params.set("adult", filters.include_adult);
+    if (filters.primary_release_year)
+      params.set("year", filters.primary_release_year);
+
+    // Skip writing URL only on initial mount
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+
+    router.replace(`/movies?${params.toString()}`, { scroll: false });
+  }, [currentPage, searchTerm, filterType, filters, isHydrated]);
 
   const urlPath = searchTerm
     ? "/search/movie"
@@ -29,6 +84,7 @@ const Movies = () => {
     ? `/discover/movie`
     : `/movie/${filterType}`;
 
+  // --- 3. Fetch data ---
   const { data, isFetching } = useQuery({
     queryKey: [
       "discoverMovies",
@@ -48,8 +104,10 @@ const Movies = () => {
       }),
     keepPreviousData: true,
     staleTime: 1000 * 60 * 60,
+    enabled: isHydrated,
   });
 
+  // --- 4. Prefetch next page ---
   useEffect(() => {
     if (data?.total_pages && currentPage < data.total_pages) {
       const nextPage = currentPage + 1;
@@ -70,22 +128,48 @@ const Movies = () => {
     }
   }, [data, currentPage, queryClient]);
 
+  // --- 5. Reset page to 1 when filters/search change (user-driven only)
+  const prevSearch = useRef(searchTerm);
+  const prevFilters = useRef(filters);
   useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm, filters]);
-
-  console.log(data);
+    if (!isHydrated) return;
+    if (
+      searchTerm !== prevSearch.current ||
+      JSON.stringify(filters) !== JSON.stringify(prevFilters.current)
+    ) {
+      setCurrentPage(1);
+    }
+    prevSearch.current = searchTerm;
+    prevFilters.current = filters;
+  }, [searchTerm, filters, isHydrated]);
 
   const filteredData = data?.results.filter(
     (movie) => movie.poster_path && movie.backdrop_path
   );
 
+  const lastClickedMovieId = useSelector(
+    (state) => state.filterSidebar.lastClickedMovieId
+  );
+
+  useEffect(() => {
+    if (lastClickedMovieId) {
+      const element = document.getElementById(`movie-${lastClickedMovieId}`);
+      if (element) {
+        element.scrollIntoView({ behavior: "instant", block: "center" });
+      }
+      dispatch(filterSidebarActions.setLastClickedMovieId(null)); // clear after scrolling
+    }
+  }, [lastClickedMovieId, data]); // run after data loads
+
+  //handle persist the lastClckedMovieID
   return (
     <>
-      <ShowsContentHeader searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
-
+      <ShowsContentHeader
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
       <section className="flex items-center justify-evenly flex-wrap gap-y-16 gap-x-4">
-        {!data || isFetching ? (
+        {!isHydrated || !data || isFetching ? (
           <LoadingCards />
         ) : filteredData?.length > 0 ? (
           filteredData?.map((movie) => (
@@ -97,9 +181,8 @@ const Movies = () => {
           <NoResultsFound />
         )}
       </section>
-
       {data && filteredData?.length > 0 && (
-        <div className="mb-8 mt-6">
+        <div className="my-8 min-h-[80px] flex justify-center">
           <Pagination
             totalPages={data.total_pages}
             currentPage={currentPage}

@@ -14,7 +14,7 @@ const tvTitleMap = {
   discover: "Discover",
   top_rated: "Top Rated",
   popular: "Popular",
-  on_the_air: "On The Air",
+  on_the_air: "On The Air", 
   airing_today: "Airing Today",
 };
 const ShowsContentHeader = ({ isTv = false, searchTerm, setSearchTerm }) => {

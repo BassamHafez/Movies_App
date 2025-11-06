@@ -1,6 +1,6 @@
 "use client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState,useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAnimation } from "motion/react";
@@ -25,10 +25,11 @@ export {
   usePathname,
   useAnimation,
   useRouter,
+  useSearchParams,
   //custom hooks
   useValidation,
   useSignOut,
   useIsSmallScreen,
   useTrailer,
-  usePlayTrailer
+  usePlayTrailer,
 };

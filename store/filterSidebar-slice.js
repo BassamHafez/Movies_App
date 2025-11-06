@@ -10,6 +10,7 @@ const filterSidebarSlice = createSlice({
   initialState: {
     type: "discover",
     filters: initialFilters,
+    lastClickedMovieId: null, 
   },
   reducers: {
     setFilterType(state, action) {
@@ -24,6 +25,9 @@ const filterSidebarSlice = createSlice({
     },
     resetFilters(state) {
       state.filters = initialFilters;
+    },
+    setLastClickedMovieId(state, action) {
+      state.lastClickedMovieId = action.payload;
     },
   },
 });

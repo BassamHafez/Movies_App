@@ -10,7 +10,8 @@ import {
   WhiteBtn,
 } from "@/shared/components";
 import { adult } from "@/shared/images";
-//handle difference betw tv and movies
+import DetailsBreadCrampLinks from "./DetailsBreadCrampLinks";
+
 export default async function MovieDetailsPage({ params }) {
   const awaitedParams = await params;
   const param = `${awaitedParams.movieDetails}`;
@@ -41,6 +42,7 @@ export default async function MovieDetailsPage({ params }) {
 
   return (
     <main className="relative h-[90vh]">
+      {/* layer */}
       <div className="fixed inset-0 size-full -z-1">
         <div className="absolute backdrop-blur-[2px] inset-0 bg-black/80 z-10" />
         <Image
@@ -51,6 +53,7 @@ export default async function MovieDetailsPage({ params }) {
           className="object-cover"
         />
       </div>
+      <DetailsBreadCrampLinks type={type}/>
 
       <section className="flex flex-wrap lg:flex-nowrap justify-center lg:justify-start gap-12 p-8">
         <div className="flex flex-col">

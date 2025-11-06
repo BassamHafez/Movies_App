@@ -1,9 +1,21 @@
+"use client";
 import { playFairFont } from "@/logic/static";
-import { Image, Link } from "@/shared/lib";
+import { Image } from "@/shared/lib";
 import { Star, Play } from "@/shared/icons";
+import { useDispatch, useRouter } from "@/shared/hooks";
+import { filterSidebarActions } from "@/store/filterSidebar-slice";
 
 const MovieCard = ({ movie, isTvShow }) => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+
   const title = isTvShow ? movie.name : movie.title;
+
+  const navigateToDetailsHandler = (id) => {
+    dispatch(filterSidebarActions.setLastClickedMovieId(movie.id)); // save to Redux
+    router.push(`/${isTvShow ? "tv" : "movie"}-${id}`); // navigate to details
+  };
+
   return (
     <div className="card bg-base-200 rounded w-[100%] xs:w-[17.1875rem] overflow-hidden">
       <figure className="relative overflow-hidden group w-[275px] h-[450px]">
@@ -21,9 +33,9 @@ const MovieCard = ({ movie, isTvShow }) => {
               borderRightStyle: "dashed",
             }}
           >
-            <Link href={`/${isTvShow ? "tv" : "movie"}-${movie.id}`}>
+            <button onClick={() => navigateToDetailsHandler(movie.id)}>
               <Play className="size-10" strokeWidth={1.5} />
-            </Link>
+            </button>
           </div>
         </div>
       </figure>

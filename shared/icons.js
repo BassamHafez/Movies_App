@@ -21,4 +21,5 @@ export {
   Filter,
   BrushCleaning,
   Rocket,
+  Folder 
 } from "lucide-react";
