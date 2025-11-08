@@ -1,5 +1,5 @@
 const SubmitBtn = ({
-  classes,
+  classes="",
   onClick,
   children,
   myWidth,

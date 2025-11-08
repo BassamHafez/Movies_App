@@ -128,9 +128,9 @@ const Movies = () => {
     }
   }, [data, currentPage, queryClient]);
 
-  // --- 5. Reset page to 1 when filters/search change (user-driven only)
   const prevSearch = useRef(searchTerm);
   const prevFilters = useRef(filters);
+
   useEffect(() => {
     if (!isHydrated) return;
     if (
@@ -139,6 +139,7 @@ const Movies = () => {
     ) {
       setCurrentPage(1);
     }
+
     prevSearch.current = searchTerm;
     prevFilters.current = filters;
   }, [searchTerm, filters, isHydrated]);
@@ -147,21 +148,18 @@ const Movies = () => {
     (movie) => movie.poster_path && movie.backdrop_path
   );
 
-  const lastClickedMovieId = useSelector(
-    (state) => state.filterSidebar.lastClickedMovieId
-  );
-
   useEffect(() => {
-    if (lastClickedMovieId) {
-      const element = document.getElementById(`movie-${lastClickedMovieId}`);
-      if (element) {
-        element.scrollIntoView({ behavior: "instant", block: "center" });
-      }
-      dispatch(filterSidebarActions.setLastClickedMovieId(null)); // clear after scrolling
-    }
-  }, [lastClickedMovieId, data]); // run after data loads
+    const storedId = sessionStorage.getItem("lastClickedMovieId");
+    if (!storedId || !data) return;
 
-  //handle persist the lastClckedMovieID
+    const element = document.getElementById(`movie-${storedId}`);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    sessionStorage.removeItem("lastClickedMovieId");
+  }, [data]);
+
   return (
     <>
       <ShowsContentHeader

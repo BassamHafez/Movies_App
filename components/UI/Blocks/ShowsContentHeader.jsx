@@ -14,11 +14,10 @@ const tvTitleMap = {
   discover: "Discover",
   top_rated: "Top Rated",
   popular: "Popular",
-  on_the_air: "On The Air", 
+  on_the_air: "On The Air",
   airing_today: "Airing Today",
 };
 const ShowsContentHeader = ({ isTv = false, searchTerm, setSearchTerm }) => {
-
   const filterType = useSelector((state) => state.filterSidebar.type);
 
   const title = isTv
@@ -27,9 +26,8 @@ const ShowsContentHeader = ({ isTv = false, searchTerm, setSearchTerm }) => {
   const handleSearch = (val) => setSearchTerm(val);
   const clearSearch = () => setSearchTerm("");
 
-
   return (
-    <div className="lg:px-10">
+    <div>
       <div className="flex flex-col items-center gap-4 mb-12">
         <MainTitle classes="text-center">{title}</MainTitle>
         <Image src={separator} alt="separator" />
@@ -44,6 +42,6 @@ const ShowsContentHeader = ({ isTv = false, searchTerm, setSearchTerm }) => {
       <div className="divider px-2" />
     </div>
   );
-}
+};
 
-export default ShowsContentHeader
+export default ShowsContentHeader;

@@ -26,9 +26,6 @@ const filterSidebarSlice = createSlice({
     resetFilters(state) {
       state.filters = initialFilters;
     },
-    setLastClickedMovieId(state, action) {
-      state.lastClickedMovieId = action.payload;
-    },
   },
 });
 

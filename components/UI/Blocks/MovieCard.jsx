@@ -2,22 +2,23 @@
 import { playFairFont } from "@/logic/static";
 import { Image } from "@/shared/lib";
 import { Star, Play } from "@/shared/icons";
-import { useDispatch, useRouter } from "@/shared/hooks";
-import { filterSidebarActions } from "@/store/filterSidebar-slice";
+import { useRouter } from "@/shared/hooks";
 
 const MovieCard = ({ movie, isTvShow }) => {
   const router = useRouter();
-  const dispatch = useDispatch();
 
   const title = isTvShow ? movie.name : movie.title;
 
   const navigateToDetailsHandler = (id) => {
-    dispatch(filterSidebarActions.setLastClickedMovieId(movie.id)); // save to Redux
-    router.push(`/${isTvShow ? "tv" : "movie"}-${id}`); // navigate to details
+    sessionStorage.setItem("lastClickedMovieId", movie.id);
+    router.push(`/${isTvShow ? "tv" : "movie"}-${id}`);
   };
 
   return (
-    <div className="card bg-base-200 rounded w-[100%] xs:w-[17.1875rem] overflow-hidden">
+    <div
+      id={`movie-${movie.id}`}
+      className="card bg-base-200 rounded w-[100%] xs:w-[17.1875rem] overflow-hidden"
+    >
       <figure className="relative overflow-hidden group w-[275px] h-[450px]">
         <Image
           src={`${process.env.NEXT_PUBLIC_IMAGE_PATH}/w342${movie.poster_path}`}

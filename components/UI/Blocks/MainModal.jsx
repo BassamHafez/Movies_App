@@ -8,10 +8,11 @@ const MainModal = ({
   isOpen,
   onClose,
   onConfirm,
-  confirmTxt="",
+  confirmTxt = "",
   children,
-  myWidth="",
-  noActions=false,
+  myWidth = "",
+  noActions = false,
+  dangerAction = false,
 }) => {
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -60,6 +61,8 @@ const MainModal = ({
                     type="button"
                     onClick={onConfirm}
                     myWidth="min-w-24"
+                    customColors={dangerAction}
+                    classes={dangerAction?"bg-red-600 text-white hover:bg-red-500 duration-300":""}
                   >
                     {confirmTxt}
                   </SubmitBtn>

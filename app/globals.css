@@ -6,7 +6,7 @@
 
 @theme {
   --color-main: #d9a520;
-  --breakpoint-xs:485px
+  --breakpoint-xs: 485px;
 }
 html {
   scroll-behavior: smooth;
@@ -20,13 +20,13 @@ body {
 
 html,
 body {
-  -ms-overflow-style: none; /* Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
+  display: none;
 }
 
 * {
@@ -48,13 +48,13 @@ select {
 .swiper-button-next,
 .swiper-button-prev {
   color: white;
-  background-color:var(--color-main) ; 
+  background-color: var(--color-main);
   padding: 0.3125rem;
   width: 2.5rem;
   height: 2.5rem;
-  opacity: .7;
-  border-radius: 50%;    
-  transition: all .8s;
+  opacity: 0.7;
+  border-radius: 50%;
+  transition: all 0.8s;
 }
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
@@ -62,16 +62,18 @@ select {
 }
 
 .swiper-button-next::after,
-.swiper-button-prev::after{
-  font-size:1.25rem;
-} 
-.swiper-button-next::after{
+.swiper-button-prev::after {
+  font-size: 1.25rem;
+}
+.swiper-button-next::after {
   transform: translate(0.0625rem);
 }
-.swiper-button-prev::after{
+.swiper-button-prev::after {
   transform: translate(-0.0625rem);
 }
-
+button {
+  cursor: pointer;
+}
 
 @media screen and (width<768px) {
   html,

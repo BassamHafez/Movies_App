@@ -6,8 +6,9 @@ import {
   useDispatch,
   useSelector,
   usePathname,
+  useSignOut,
 } from "@/shared/hooks";
-import { AlignRight, LogOut,Bolt } from "@/shared/icons";
+import { AlignRight, LogOut, Bolt } from "@/shared/icons";
 import { motion, AnimatePresence, Link } from "@/shared/lib";
 import { moviesSideBarPages, tvsSidebarPages } from "@/logic/static";
 import { LogoName } from "@/shared/components";
@@ -22,6 +23,7 @@ const MainSideBar = () => {
   const dispatch = useDispatch();
   const filterType = useSelector((state) => state.filterSidebar.type);
   const pathname = usePathname();
+  const { logoutModal, openModal } = useSignOut();
   const sidebarPages =
     pathname === "/movies" ? moviesSideBarPages : tvsSidebarPages;
 
@@ -129,7 +131,10 @@ const MainSideBar = () => {
           )}
         </Link>
 
-        <button className="cursor-pointer relative flex items-center gap-3 p-2 rounded-lg transition-all hover:bg-base-300 text-sm">
+        <button
+          onClick={openModal}
+          className="cursor-pointer relative flex items-center gap-3 p-2 rounded-lg transition-all hover:bg-base-300 text-sm"
+        >
           <LogOut className="size-5 shrink-0" strokeWidth={1.5} />
           {isSmallSideBar ? null : (
             <MotionSpan
@@ -144,6 +149,7 @@ const MainSideBar = () => {
           )}
         </button>
       </div>
+      {logoutModal}
     </MotionDiv>
   );
 };
