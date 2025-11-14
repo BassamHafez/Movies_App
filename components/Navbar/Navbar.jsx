@@ -6,11 +6,12 @@ import {
 } from "@/shared/components";
 import { AlignLeft } from "@/shared/icons";
 import { Link } from "@/shared/lib";
-import { Bell } from "@/shared/icons";
 import { NavWrapper } from "@/shared/providers";
 import NavLinks from "./NavLinks";
+import Notifications from "./Notifications";
 
 const Navbar = () => {
+
   return (
     <>
       <NavWrapper>
@@ -19,23 +20,23 @@ const Navbar = () => {
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <AlignLeft className="size-5" />
             </div>
-            <ul
+            <div
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+              className="menu dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
               <NavLinks dropdownMenu />
               <div className="mt-4 md:hidden">
-                <SignBtn  fullWidth/>
+                <SignBtn fullWidth />
               </div>
-            </ul>
+            </div>
           </div>
           <Link href="/">
             <LogoName />
           </Link>
           <div className="hidden lg:flex ms-8">
-            <ul className="flex gap-8 px-1">
+            <div className="flex gap-8 px-1">
               <NavLinks />
-            </ul>
+            </div>
           </div>
         </div>
 
@@ -46,7 +47,9 @@ const Navbar = () => {
           <div className="lg:hidden">
             <SearchField smallField />
           </div>
-          <Bell />
+
+          <Notifications />
+
           <div className="hidden md:block">
             <SignBtn />
           </div>

@@ -10,7 +10,7 @@ import {
   appStore,
   tvShows,
   separator,
-  owls,
+  love,
   tv,
   fireTV,
   chromecast,
@@ -36,7 +36,7 @@ const PublicHome = () => {
         <MotionSectionWrapper horizontalShift classes="flex">
           <div className="hidden lg:flex items-center h-full ">
             <Image
-              src={owls}
+              src={love}
               alt="wonderful woman and man watching movie"
               className="w-[43.75rem] h-[40.625rem] object-cover rounded-md"
             />
