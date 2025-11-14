@@ -1,37 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+🎬 Movies App – Next.js, Tailwind CSS, DaisyUI & Framer Motion
 
-## Getting Started
+A modern, responsive and animated Movies & TV Shows application built with Next.js, styled using Tailwind CSS + DaisyUI, enhanced with Framer Motion animations, and powered by TheMovieDB API.
+The app allows users to explore movies, TV shows, trending people, watch trailers, filter content, search, and authenticate with a simple dummy backend.
 
-First, run the development server:
+🚀 Features
+🏠 Beautiful Home Page
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Dynamic hero sections
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Trending movies and TV shows
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Smooth animations with Framer Motion
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Fully responsive layout
 
-## Learn More
+🔍 Advanced Search & Filters
 
-To learn more about Next.js, take a look at the following resources:
+Search movies and TV shows by title
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Filter by genres, popularity, release date, vote average, and more
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Optimized UI with DaisyUI components
 
-## Deploy on Vercel
+👤 Authentication
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Register and Login pages (using a dummy API)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# Movies_App
+Basic protected routes setup
+
+Responsive forms with validation
+
+🎥 Movies & TV Shows
+
+Browse latest, popular, and trending movies
+
+Browse all TV shows with filters
+
+See detailed pages for every movie/TV (cast, crew, rating, overview, posters)
+
+🌟 Trending People
+
+Explore popular actors and celebrities
+
+View their profiles, biography, images, and known-for titles
+
+🎞️ Trailers & Videos
+
+Watch official trailers directly inside movie detail pages
+
+Embedded and optimized video player
+
+🎯 Related Content
+
+Discover related movies or TV shows based on what the user is watching
+
+🛠️ Tech Stack
+
+⚡ Next.js – App Router, Server Components, Image optimization
+🎨 Tailwind CSS + DaisyUI – Clean UI, dark/light themes, responsive components
+🎬 Framer Motion – Page transitions & smooth animations
+🌐 TMDB API – Movies, TV shows, people & trailers
+🔐 Dummy Auth API – Registration & login for demo
+💾 React Query (optional depending on your implementation) – Data caching & loading states
