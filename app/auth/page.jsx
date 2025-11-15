@@ -7,7 +7,7 @@ const Login = () => {
   return (
     <>
       <MainTitle classes="mb-8">Welcome Back</MainTitle>
-      <FormWrapper formType="login" classes="size-full">
+      <FormWrapper formType="signin" classes="size-full">
         <TextField
           type="email"
           name="email"

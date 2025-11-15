@@ -6,7 +6,8 @@
 
 @theme {
   --color-main: #d9a520;
-  --breakpoint-xs: 485px;
+  --breakpoint-xs: 30.3125rem;
+  --breakpoint-xxs: 22.8125rem;
 }
 html {
   scroll-behavior: smooth;

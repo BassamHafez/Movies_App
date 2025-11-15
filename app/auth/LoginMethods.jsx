@@ -1,7 +1,9 @@
 import { googleIcon } from "@/shared/images";
 import { Image, Link } from "@/shared/lib";
 
-const LoginMethods = () => {
+const LoginMethods = ({ signup = false }) => {
+  const type = signup ? "Sign Up" : "Login";
+
   return (
     <div className="flex flex-col gap-6 items-center">
       <button
@@ -19,7 +21,7 @@ const LoginMethods = () => {
             d="M8 12h5V8c0-6 4-7 11-6v5c-4 0-5 0-5 3v2h5l-1 6h-4v12h-6V18H8z"
           ></path>
         </svg>
-        Login with Facebook
+        {type} with Facebook
       </button>
 
       <button
@@ -32,13 +34,16 @@ const LoginMethods = () => {
           width={20}
           height={20}
         />
-        <span>Login with Google</span>
+        <span>{type} with Google</span>
       </button>
 
       <p className="text-sm text-gray-500">
-        Don't have an account?{" "}
-        <Link href="/auth/register" className="text-blue-400 hover:underline">
-          sign up
+        Already an account?{" "}
+        <Link
+          href={signup ? "/auth" : "/auth/register"}
+          className="text-blue-400 hover:underline"
+        >
+          {signup?"login":"register"}
         </Link>
       </p>
     </div>

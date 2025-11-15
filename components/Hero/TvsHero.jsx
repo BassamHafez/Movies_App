@@ -20,7 +20,7 @@ const TvsHero = () => {
   const tvShows = data?.results;
 
   return (
-    <header className="mb-20 flex justify-center">
+    <header className="mb-20 hidden xs:flex justify-center">
       <MoviesHeroSlider movies={tvShows} isTvShow />
     </header>
   );

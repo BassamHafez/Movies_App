@@ -2,11 +2,16 @@
 import { InputErrorMessage } from "@/shared/components";
 import { ErrorMessage, Field } from "@/shared/lib";
 
-const TextField = ({ type, name, placeholder, classes }) => {
+const TextField = ({
+  type = "text",
+  name = "field",
+  placeholder = "",
+  classes = "",
+}) => {
   return (
     <div className="mb-6 relative">
       <Field
-        type={type ? type : "text"}
+        type={type}
         name={name}
         placeholder={placeholder}
         className={`text-sm w-full p-2 border border-gray-500 rounded focus:placeholder:text-xs placeholder:transition-all placeholder:duration-500 ${classes}`}

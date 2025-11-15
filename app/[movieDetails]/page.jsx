@@ -9,20 +9,20 @@ import {
   TrailerVideo,
   WhiteBtn,
 } from "@/shared/components";
-import { adult } from "@/shared/images";
+import { adult, avatar } from "@/shared/images";
 import DetailsBreadCrampLinks from "./DetailsBreadCrampLinks";
 
-export default async function MovieDetailsPage({ params }) {
-  const awaitedParams = await params;
-  const param = `${awaitedParams.movieDetails}`;
-  const parts = param.split("-");
-  const type = parts[0].replace("/", "");
-  const movieId = parts[1];
+const MovieDetailsPage = async ({ params }) => {
+  const currentParams = await params;
+  const [rawType, movieId] = currentParams.movieDetails.split("-");
+  const type = rawType.replace("/", "");
 
   const movie = await mainFormsHandlerTypeRaw({
     type: `/${type}/${movieId}`,
     params: "?language=en-US&append_to_response=videos",
     serverReq: true,
+    tags: `${type}-${movieId}`,
+    revalidateTime: 3600,
   });
 
   const movieVideos = movie?.videos?.results || [];
@@ -53,11 +53,11 @@ export default async function MovieDetailsPage({ params }) {
           className="object-cover"
         />
       </div>
-      <DetailsBreadCrampLinks type={type}/>
+      <DetailsBreadCrampLinks type={type} />
 
       <section className="flex flex-wrap lg:flex-nowrap justify-center lg:justify-start gap-12 p-8">
         <div className="flex flex-col">
-          <div className="relative w-[300px] h-[450px]">
+          <div className="relative w-[18.75rem] h-[28.125rem] bg-base-200">
             <Image
               src={`${process.env.NEXT_PUBLIC_IMAGE_PATH}/w500${movie.poster_path}`}
               alt={title}
@@ -178,4 +178,6 @@ export default async function MovieDetailsPage({ params }) {
       <Recommendations id={movieId} />
     </main>
   );
-}
+};
+
+export default MovieDetailsPage;

@@ -3,6 +3,7 @@ import axios from "axios";
 const validFormMethods = ["post", "patch", "put"];
 
 export const signFormsHandler = async ({ type, formData }) => {
+  console.log(`${process.env.NEXT_PUBLIC_BASE_URL_ROUTE}auth/${type}`);
   try {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_BASE_URL_ROUTE}auth/${type}`,
@@ -10,21 +11,26 @@ export const signFormsHandler = async ({ type, formData }) => {
     );
     return response?.data;
   } catch (error) {
-    if (error.response) {
-      throw error.response;
-    } else if (error.request) {
-      throw error.request;
-    }
-    throw error.message;
+    console.log("from http", error);
+
+    const message =
+      error?.response?.data?.message ||
+      error?.message ||
+      "Unknown error occurred";
+
+    // Always throw plain error
+    throw new Error(message);
   }
 };
 
 export const mainFormsHandlerTypeRaw = async ({
   type,
   formData,
-  method="get",
+  method = "get",
   params,
   serverReq,
+  revalidateTime = 3600,
+  tags,
 }) => {
   const headers = {
     accept: "application/json",
@@ -46,7 +52,7 @@ export const mainFormsHandlerTypeRaw = async ({
       if (serverReq) {
         response = await fetch(`${url}${params}`, {
           headers,
-          next: { revalidate: 3600 },
+          next: { revalidate: revalidateTime, tags: [tags ?? type] },
         });
         return response.json();
       } else {
@@ -58,87 +64,14 @@ export const mainFormsHandlerTypeRaw = async ({
       }
     }
   } catch (error) {
-    console.error(error);
-    throw error;
+    console.error("HTTP ERROR:", error);
+
+    const message =
+      error?.response?.data?.message ||
+      error?.response?.data?.error ||
+      error?.message ||
+      "Unknown error occurred";
+
+    throw new Error(message); // 👉 Always throw plain Error
   }
 };
-
-// export const mainFormsHandlerTypeFormData = async ({
-//   type,
-//   formData,
-//   method,
-//   token,
-//   isLimited,
-// }) => {
-//   const headers = {
-//     Authorization: `Bearer ${token}`,
-//     "Content-Type": "multipart/form-data",
-//   };
-//   const myUrl = `${baseServerUrl}${type}`;
-
-//   try {
-//     let response = null;
-//     if (validFormMethods.includes(method)) {
-//       response = await axios[method](myUrl, formData, {
-//         headers,
-//       });
-//     } else {
-//       if (!token) {
-//         console.error("Unauthorized");
-//         return null;
-//       }
-//       response = await axios.get(myUrl, {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//         params: isLimited ? { limit: Infinity } : undefined,
-//       });
-//     }
-//     return response.data;
-//   } catch (error) {
-//     console.error(error);
-//     throw error;
-//   }
-// };
-
-// export const mainDeleteFunHandler = async ({ id, token, type }) => {
-//   try {
-//     const response = await axios.delete(
-//       `${import.meta.env.VITE_Base_API_URL}${type}/${id}`,
-//       {
-//         headers: { Authorization: `Bearer ${token}` },
-//       }
-//     );
-//     return response;
-//   } catch (error) {
-//     console.error(error);
-//     throw error;
-//   }
-// };
-
-// export const mainEmptyBodyFun = async ({ token, type, method }) => {
-//   try {
-//     const response = await axios[method](
-//       `${baseServerUrl}${type}`,
-//       {},
-//       {
-//         headers: { Authorization: `Bearer ${token}` },
-//       }
-//     );
-
-//     return response.data;
-//   } catch (error) {
-//     console.error(error);
-//     throw error;
-//   }
-// };
-
-// export const getPublicData = async ({ type }) => {
-//   try {
-//     const response = await axios.get(`${baseServerUrl}${type}`);
-//     return response.data;
-//   } catch (error) {
-//     console.error(error);
-//     throw error;
-//   }
-// };

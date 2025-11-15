@@ -20,7 +20,7 @@ const useValidation = () => {
   const phoneValidation = useMemo(
     () =>
       string()
-        .matches(/^05\d{8}$/, "Invalid Phone Number")
+        .matches(/^01[0125][0-9]{8}$/, "Invalid Phone Number")
         .required(reqText),
     []
   );

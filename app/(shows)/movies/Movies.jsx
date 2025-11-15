@@ -32,7 +32,6 @@ const Movies = () => {
 
   const isInitialMount = useRef(true);
 
-  // --- 1. Sync Redux & local states from URL ---
   useEffect(() => {
     const urlPage = Number(searchParams.get("page")) || 1;
     const urlSearch = searchParams.get("search") || "";
@@ -57,7 +56,7 @@ const Movies = () => {
   const filterType = useSelector((state) => state.filterSidebar.type);
   const filters = useSelector((state) => state.filterSidebar.filters);
 
-  // --- 2. Update URL when states change ---
+  // update URL when states change
   useEffect(() => {
     if (!isHydrated) return;
 
@@ -69,7 +68,6 @@ const Movies = () => {
     if (filters.primary_release_year)
       params.set("year", filters.primary_release_year);
 
-    // Skip writing URL only on initial mount
     if (isInitialMount.current) {
       isInitialMount.current = false;
       return;
@@ -84,7 +82,6 @@ const Movies = () => {
     ? `/discover/movie`
     : `/movie/${filterType}`;
 
-  // --- 3. Fetch data ---
   const { data, isFetching } = useQuery({
     queryKey: [
       "discoverMovies",
@@ -107,7 +104,6 @@ const Movies = () => {
     enabled: isHydrated,
   });
 
-  // --- 4. Prefetch next page ---
   useEffect(() => {
     if (data?.total_pages && currentPage < data.total_pages) {
       const nextPage = currentPage + 1;

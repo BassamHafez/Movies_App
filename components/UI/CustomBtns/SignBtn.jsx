@@ -1,27 +1,17 @@
 "use client";
-import { useSelector, useSignOut, useState } from "@/shared/hooks";
+import { usePathname, useSelector } from "@/shared/hooks";
 import { SecondaryBtn } from "@/shared/components";
 import { Link } from "@/shared/lib";
 
 const SignBtn = ({ fullWidth }) => {
-  const token = useSelector((state) => state.userInfo.token);
-  const { logoutModal, openModal } = useSignOut();
-
+  const token = useSelector((s) => s.userInfo.token);
+  const pathname = usePathname();
+  if (pathname.startsWith("/auth") || token) return null;
   return (
     <>
-      {token ? (
-        <SecondaryBtn classes={fullWidth ? "w-full" : ""} onClick={openModal}>
-          Sign Out
-        </SecondaryBtn>
-      ) : (
-        <Link href="/auth">
-          <SecondaryBtn classes={fullWidth ? "w-full" : ""}>
-            Sign In
-          </SecondaryBtn>
-        </Link>
-      )}
-
-      {logoutModal}
+      <Link href="/auth">
+        <SecondaryBtn classes={fullWidth ? "w-full" : ""}>Sign In</SecondaryBtn>
+      </Link>
     </>
   );
 };

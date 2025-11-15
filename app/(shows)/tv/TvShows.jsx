@@ -74,8 +74,6 @@ const TvShows = () => {
     setCurrentPage(1);
   }, [searchTerm, filters]);
 
-  console.log("tv", data);
-
   const filteredData = data?.results.filter(
     (show) => show.poster_path && show.backdrop_path
   );

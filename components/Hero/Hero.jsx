@@ -1,11 +1,8 @@
 import { playFairFont } from "@/logic/static";
-import styles from "./Hero.module.css";
-import {
-  CurvedSvgLine,
-  MainBtn,
-  WhiteBtn,
-} from "@/shared/components";
+import { CurvedSvgLine, MainBtn, WhiteBtn } from "@/shared/components";
 import { MotionSectionWrapper } from "@/shared/providers";
+import { Link } from "@/shared/lib";
+import styles from "./Hero.module.css";
 
 const Hero = () => {
   return (
@@ -32,7 +29,9 @@ const Hero = () => {
           Premium stories. Exclusive access. Pure cinematic excellence.
         </p>
         <div className="flex justify-center flex-wrap gap-8 mt-8">
-          <MainBtn classes="md:btn-lg">Get Started</MainBtn>
+          <Link href="/auth">
+            <MainBtn classes="md:btn-lg">Get Started</MainBtn>
+          </Link>
           <WhiteBtn classes="md:btn-lg">More Info</WhiteBtn>
         </div>
       </MotionSectionWrapper>
