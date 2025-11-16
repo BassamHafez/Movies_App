@@ -13,7 +13,6 @@ const ProfileAvatar = () => {
 
   const handleNavigation = (url) => {
     setIsDropdownClosed(true);
-    navigate(url);
     router.push(url);
   };
 
@@ -26,7 +25,7 @@ const ProfileAvatar = () => {
     {
       title: "Account Setting",
       icon: Settings,
-      url: `/account-setting/${info?.name}`,
+      url: "account-setting",
     },
   ];
 

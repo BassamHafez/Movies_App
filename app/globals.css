@@ -76,6 +76,40 @@ button {
   cursor: pointer;
 }
 
+.field {
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  position: relative;
+}
+.field input {
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.134);
+  border: 1px solid rgba(242, 241, 241, 0.084);
+  width: 100%;
+  transition: all 0.4s;
+  min-width: 12.5rem;
+}
+
+.field input::placeholder {
+  font-size: 13px;
+  transition: all 0.4s;
+}
+.field input:focus {
+  scale: 1.01;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.362);
+}
+.field input:focus::placeholder {
+  font-size: 11px;
+}
+.field label {
+  font-weight: 600;
+  margin-bottom: 10px;
+  text-align: start;
+}
+
 @media screen and (width<768px) {
   html,
   body {
