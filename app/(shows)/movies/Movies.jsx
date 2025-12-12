@@ -56,6 +56,9 @@ const Movies = () => {
   const filterType = useSelector((state) => state.filterSidebar.type);
   const filters = useSelector((state) => state.filterSidebar.filters);
 
+  // Create a stable filter key for query key
+  const filterKey = `${filters.include_adult}-${filters.primary_release_year || 'null'}`;
+
   // update URL when states change
   useEffect(() => {
     if (!isHydrated) return;
@@ -74,7 +77,7 @@ const Movies = () => {
     }
 
     router.replace(`/movies?${params.toString()}`, { scroll: false });
-  }, [currentPage, searchTerm, filterType, filters, isHydrated]);
+  }, [currentPage, searchTerm, filterType, filters, isHydrated, router]);
 
   const urlPath = searchTerm
     ? "/search/movie"
@@ -82,13 +85,13 @@ const Movies = () => {
     ? `/discover/movie`
     : `/movie/${filterType}`;
 
-  const { data, isFetching } = useQuery({
+  const { data, isFetching, isError, error, refetch } = useQuery({
     queryKey: [
       "discoverMovies",
       currentPage,
       filterType,
       searchTerm,
-      JSON.stringify(filters),
+      filterKey,
     ],
     queryFn: () =>
       mainFormsHandlerTypeRaw({
@@ -102,6 +105,9 @@ const Movies = () => {
     keepPreviousData: true,
     staleTime: 1000 * 60 * 60,
     enabled: isHydrated,
+    refetchOnWindowFocus: false,
+    retry: 2,
+    retryDelay: 1000,
   });
 
   useEffect(() => {
@@ -113,7 +119,7 @@ const Movies = () => {
           nextPage,
           filterType,
           searchTerm,
-          JSON.stringify(filters),
+          filterKey,
         ],
         queryFn: () =>
           mainFormsHandlerTypeRaw({
@@ -122,23 +128,23 @@ const Movies = () => {
           }),
       });
     }
-  }, [data, currentPage, queryClient]);
+  }, [data, currentPage, queryClient, filterType, searchTerm, filterKey, filters, urlPath]);
 
   const prevSearch = useRef(searchTerm);
-  const prevFilters = useRef(filters);
+  const prevFilterKey = useRef(filterKey);
 
   useEffect(() => {
     if (!isHydrated) return;
     if (
       searchTerm !== prevSearch.current ||
-      JSON.stringify(filters) !== JSON.stringify(prevFilters.current)
+      filterKey !== prevFilterKey.current
     ) {
       setCurrentPage(1);
     }
 
     prevSearch.current = searchTerm;
-    prevFilters.current = filters;
-  }, [searchTerm, filters, isHydrated]);
+    prevFilterKey.current = filterKey;
+  }, [searchTerm, filterKey, isHydrated]);
 
   const filteredData = data?.results.filter(
     (movie) => movie.poster_path && movie.backdrop_path
@@ -163,8 +169,18 @@ const Movies = () => {
         setSearchTerm={setSearchTerm}
       />
       <section className="flex items-center justify-evenly flex-wrap gap-y-16 gap-x-4">
-        {!isHydrated || !data || isFetching ? (
+        {!isHydrated || isFetching || (isError && !data) ? (
           <LoadingCards />
+        ) : isError ? (
+          <div className="w-full text-center py-8">
+            <p className="text-error mb-4">Error loading movies: {error?.message || "Unknown error"}</p>
+            <button 
+              onClick={() => refetch()} 
+              className="btn btn-primary"
+            >
+              Retry
+            </button>
+          </div>
         ) : filteredData?.length > 0 ? (
           filteredData?.map((movie) => (
             <div key={movie.id} className="flex justify-center items-center">

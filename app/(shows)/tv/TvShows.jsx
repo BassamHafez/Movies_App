@@ -23,19 +23,22 @@ const TvShows = () => {
   const filters = useSelector((state) => state.filterSidebar.filters);
   const queryClient = useQueryClient();
 
+  // Create a stable filter key for query key
+  const filterKey = `${filters.include_adult}-${filters.primary_release_year || 'null'}`;
+
   const urlPath = searchTerm
     ? "/search/tv"
     : filterType === "discover"
     ? `/discover/tv`
     : `/tv/${filterType}`;
 
-  const { data, isFetching } = useQuery({
+  const { data, isFetching, isError, error, refetch } = useQuery({
     queryKey: [
       "discoverTvShows",
       currentPage,
       filterType,
       searchTerm,
-      JSON.stringify(filters),
+      filterKey,
     ],
     queryFn: () =>
       mainFormsHandlerTypeRaw({
@@ -48,6 +51,9 @@ const TvShows = () => {
       }),
     keepPreviousData: true,
     staleTime: 1000 * 60 * 60,
+    refetchOnWindowFocus: false,
+    retry: 2,
+    retryDelay: 1000,
   });
 
   useEffect(() => {
@@ -59,7 +65,7 @@ const TvShows = () => {
           nextPage,
           filterType,
           searchTerm,
-          JSON.stringify(filters),
+          filterKey,
         ],
         queryFn: () =>
           mainFormsHandlerTypeRaw({
@@ -68,7 +74,7 @@ const TvShows = () => {
           }),
       });
     }
-  }, [data, currentPage, queryClient]);
+  }, [data, currentPage, queryClient, filterType, searchTerm, filterKey, filters, urlPath]);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -86,8 +92,18 @@ const TvShows = () => {
       />
 
       <section className="flex items-center justify-evenly flex-wrap gap-y-16 gap-x-4">
-        {!data || isFetching ? (
+        {isFetching || (isError && !data) ? (
           <LoadingCards />
+        ) : isError ? (
+          <div className="w-full text-center py-8">
+            <p className="text-error mb-4">Error loading TV shows: {error?.message || "Unknown error"}</p>
+            <button 
+              onClick={() => refetch()} 
+              className="btn btn-primary"
+            >
+              Retry
+            </button>
+          </div>
         ) : filteredData?.length > 0 ? (
           filteredData?.map((show) => (
             <div key={show.id} className="flex justify-center items-center">
