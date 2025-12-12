@@ -4,7 +4,7 @@ import { mainFormsHandlerTypeRaw } from "@/util/http";
 const Recommendations = async ({ id }) => {
   const recommendations = await mainFormsHandlerTypeRaw({
     type: `/movie/${id}/recommendations`,
-    params: `?api_key=${process.env.MOVIE_KEY}`,
+    params: { api_key: process.env.MOVIE_KEY },
     serverReq: true,
   });
 

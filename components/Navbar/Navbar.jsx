@@ -11,7 +11,6 @@ import NavLinks from "./NavLinks";
 import Notifications from "./Notifications";
 
 const Navbar = () => {
-
   return (
     <>
       <NavWrapper>

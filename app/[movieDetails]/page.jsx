@@ -9,7 +9,7 @@ import {
   TrailerVideo,
   WhiteBtn,
 } from "@/shared/components";
-import { adult, avatar } from "@/shared/images";
+import { adult } from "@/shared/images";
 import DetailsBreadCrampLinks from "./DetailsBreadCrampLinks";
 
 const MovieDetailsPage = async ({ params }) => {
@@ -19,7 +19,10 @@ const MovieDetailsPage = async ({ params }) => {
 
   const movie = await mainFormsHandlerTypeRaw({
     type: `/${type}/${movieId}`,
-    params: "?language=en-US&append_to_response=videos",
+    params: {
+      language: "en-US",
+      append_to_response: "videos",
+    },
     serverReq: true,
     tags: `${type}-${movieId}`,
     revalidateTime: 3600,
@@ -28,12 +31,13 @@ const MovieDetailsPage = async ({ params }) => {
   const movieVideos = movie?.videos?.results || [];
 
   const officialTrailers = movieVideos?.filter(
-    (movie) => movie.type === "Trailer"
+    (movie) => movie?.type === "Trailer"
   );
 
-  const title = type === "tv" ? movie.name : movie.title;
-  const releaseDate = type === "tv" ? movie.first_air_date : movie.release_date;
-  const runTime = type === "tv" ? movie.episode_run_time : movie.runtime;
+  const title = type === "tv" ? movie?.name : movie?.title;
+  const releaseDate =
+    type === "tv" ? movie?.first_air_date : movie?.release_date;
+  const runTime = type === "tv" ? movie?.episode_run_time : movie?.runtime;
   const runTimeHours = Math.floor(runTime / 60);
   const runTimeMin = Math.floor(runTime % 60);
   const runtTimeStr = `${
@@ -80,9 +84,9 @@ const MovieDetailsPage = async ({ params }) => {
         <div className="px-4 flex flex-col gap-4">
           <MainTitle classes="w-fit relative">
             <>
-              {movie.homepage ? (
+              {movie?.homepage ? (
                 <Link
-                  href={movie.homepage}
+                  href={movie?.homepage}
                   target="_blank"
                   className="text-white tooltip tooltip-bottom"
                   data-tip="Go to home page"
@@ -93,7 +97,7 @@ const MovieDetailsPage = async ({ params }) => {
               ) : (
                 <span className="text-white">{title}</span>
               )}
-              {movie.adult && (
+              {movie?.adult && (
                 <Image
                   className="size-6 absolute -top-1 -right-6"
                   src={adult}
@@ -105,11 +109,11 @@ const MovieDetailsPage = async ({ params }) => {
 
           <div
             className="flex items-center gap-4 tooltip w-fit"
-            data-tip={Number(movie.vote_average).toFixed(1)}
+            data-tip={Number(movie?.vote_average).toFixed(1)}
           >
-            <RatingStars rateNum={movie.vote_average} />{" "}
+            <RatingStars rateNum={movie?.vote_average} />{" "}
             <div className="badge badge-sm badge-soft rounded">
-              {movie.status}
+              {movie?.status}
             </div>
           </div>
           <div className="flex items-center gap-4">
@@ -121,9 +125,9 @@ const MovieDetailsPage = async ({ params }) => {
             </p>
           </div>
 
-          {movie.genres && movie.genres.length > 0 && (
+          {movie?.genres && movie?.genres.length > 0 && (
             <div className="flex flex-wrap items-center gap-2">
-              {movie.genres.map((g) => (
+              {movie?.genres.map((g) => (
                 <div key={g.id} className="badge badge-neutral rounded">
                   {g.name}
                 </div>
@@ -133,15 +137,15 @@ const MovieDetailsPage = async ({ params }) => {
 
           <div className="my-4 sm:max-w-4/5">
             <h2 className="text-gray-400 text-lg">Overview</h2>
-            <p className="mt-2">{movie.overview}</p>
+            <p className="mt-2">{movie?.overview}</p>
           </div>
 
-          {movie.production_companies &&
-            movie.production_companies.length > 0 && (
+          {movie?.production_companies &&
+            movie?.production_companies.length > 0 && (
               <div>
                 <h2 className="text-gray-400 text-lg">Production Companies</h2>
                 <div className="flex flex-wrap items-center gap-4 mt-2">
-                  {movie.production_companies.map((company) =>
+                  {movie?.production_companies.map((company) =>
                     company.logo_path ? (
                       <div
                         key={company.id}

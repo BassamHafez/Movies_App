@@ -9,6 +9,7 @@
   --breakpoint-xs: 30.3125rem;
   --breakpoint-xxs: 22.8125rem;
 }
+
 html {
   scroll-behavior: smooth;
   scrollbar-gutter: auto !important;

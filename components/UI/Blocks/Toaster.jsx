@@ -1,5 +1,5 @@
 import { playFairFont } from "@/logic/static";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, Zoom } from "react-toastify";
 
 const Toaster = () => {
   return (
@@ -13,6 +13,7 @@ const Toaster = () => {
       pauseOnFocusLoss={false}
       theme="dark"
       className={`text-sm gap-x-4 ${playFairFont}`}
+      transition={Zoom}
     />
   );
 };

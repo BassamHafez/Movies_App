@@ -13,6 +13,7 @@ import adult from "@/assets/images/18.webp";
 import fireTV from "@/assets/images/fireTV.webp";
 import tv from "@/assets/images/tv.webp";
 import password from "@/assets/images/password.webp";
+import notFound from "@/assets/images/error404.webp";
 
 //publicHomeSlider
 import slider1 from "@/assets/images/publicHomeSlider/slider1.webp";
@@ -24,7 +25,6 @@ import slider6 from "@/assets/images/publicHomeSlider/slider6.webp";
 
 //svg
 import separator from "@/assets/svg/separator.svg";
-import notFound from "@/assets/svg/notFound.svg";
 
 export {
   logo,
