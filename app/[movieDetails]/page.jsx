@@ -179,7 +179,7 @@ const MovieDetailsPage = async ({ params }) => {
         </section>
       )}
 
-      <Recommendations id={movieId} />
+      <Recommendations id={movieId} type={type} />
     </main>
   );
 };

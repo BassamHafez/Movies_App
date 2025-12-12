@@ -1,9 +1,9 @@
 import { MainTitle, MovieCard } from "@/shared/components";
 import { mainFormsHandlerTypeRaw } from "@/util/http";
 
-const Recommendations = async ({ id }) => {
+const Recommendations = async ({ id ,type}) => {
   const recommendations = await mainFormsHandlerTypeRaw({
-    type: `/movie/${id}/recommendations`,
+    type: `/${type}/${id}/recommendations`,
     params: { api_key: process.env.MOVIE_KEY },
     serverReq: true,
   });
